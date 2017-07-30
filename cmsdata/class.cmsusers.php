@@ -386,7 +386,9 @@ class cmsUsers{
 		else
 		{
 			$profile = $this->getUserInfoById($id);
-			if ($profile[2] == $pass)
+			$passhd = $profile[2];
+			
+			if (password_verify($pass, $passhd))
 			{
 				$sid = $cmsSessions->createSession($user);
 				if (!$sid)

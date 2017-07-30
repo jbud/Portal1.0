@@ -296,7 +296,8 @@ switch( $_POST['step'] ){
 			if ( !mysql_select_db($_POST['database'],$link) ){
 				echo "Error! Unable to connect to database.";
 			} else {
-				$sql = "INSERT INTO users (user, pass, email, posts, admin, subscriber) VALUES ('".$_POST['admin']."', '".$_POST['pass']."', '".$_POST['aemail']."', '0', '1', '1')";
+				$phpass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+				$sql = "INSERT INTO users (user, pass, email, posts, admin, subscriber) VALUES ('".$_POST['admin']."', '".$phpass."', '".$_POST['aemail']."', '0', '1', '1')";
 				if (!mysql_query( $sql , $link))
 				{
 					die(mysql_error(). " " .$sql);

@@ -208,7 +208,8 @@ if ($_GET['register'] == "true")
 		{
 			if (!$cmsUsers->doesUserExist($_POST['user']))
 			{
-			    $rez = $cmsUsers->addUser($_POST['user'], $_POST['pass'], $_POST['email']);
+				$phpass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+			    $rez = $cmsUsers->addUser($_POST['user'], $phpass, $_POST['email']);
 				if (!$rez)
 				{
 					$regfailedmessage = "Failed to Register, Please contact <a href='mailto:$cmsSupportEmail'>$cmsSupportEmail</a> ERROR2: $rez! ".mysql_error();
@@ -523,6 +524,10 @@ if ($_GET['newpage'] == "true")
 					$errMsg = "Failed to add page!";
 					$successM = false;
 				}
+				else
+				{
+					$errMsg = "Page added successfully!";
+				}
 			}
 			else
 			{
@@ -543,7 +548,7 @@ if ($_GET['newpage'] == "true")
 		$successM = false;
 	}
 }
-##############################################################CONTINUE HERE####################################################
+
 if ($_GET['editpage'] == "true")
 {
 	if ($cmsSessions->verifySession($sid))
@@ -553,19 +558,56 @@ if ($_GET['editpage'] == "true")
     		$php = (empty($_POST['isphp'])) ? '0' : '1';
 			$active = (empty($_POST['isactive'])) ? '0' : '1';
 			$news = $cmsSettings->editPage($_POST['title'], $_POST['body'], $php, $active,$_POST['id']);
+			if (!$news)
+			{
+				$errMsg = "Failed to edit page!";
+				$successM = false;
+			}
+			else
+			{
+				$errMsg = "Page editted successfully!";
+			}
 		}
+		else
+		{
+			$errMsg = "You do not have permission to complete this action!";
+			$successM = false;
+		}
+	}
+	else
+	{
+		$errMsg = "You are not logged in. Log in to continue...";
+		$successM = false;
 	}
 }
 if ($_GET['rempage'] == "true" && !empty($_GET['pid']))
 {
 	if ($cmsSessions->verifySession($sid))
-    	{
-    		if ($cmsUsers->isAdmin($cmsSessions->getUidBySession($sid)))
-    		{
-    			$rem = $cmsSettings->remPage($_GET['pid']);
-				$errMsg = "Page Removed";
-    		}
-    	}
+	{
+		if ($cmsUsers->isAdmin($cmsSessions->getUidBySession($sid)))
+		{
+			$rem = $cmsSettings->remPage($_GET['pid']);
+			if (!$rem)
+			{
+				$errMsg = "Failed to remove page!";
+				$successM = false;
+			}
+			else
+			{
+				$errMsg = "Page removed!";
+			}
+		}
+		else
+		{
+			$errMsg = "You do not have permission to complete this action!";
+			$successM = false;
+		}
+	}
+	else
+	{
+		$errMsg = "You are not logged in. Log in to continue...";
+		$successM = false;
+	}
 }
 if ($_GET['remlink'] == "true" && !empty($_GET['link']))
 {
@@ -574,8 +616,26 @@ if ($_GET['remlink'] == "true" && !empty($_GET['link']))
 		if ($cmsUsers->isAdmin($cmsSessions->getUidBySession($sid)))
 		{
 			$rem = $cmsSettings->remLink($_GET['link']);
-			$errMsg = "Link Removed";
+			if (!$rem)
+			{
+				$errMsg = "Failed to remove link!";
+				$successM = false;
+			}
+			else
+			{
+				$errMsg = "Link removed!";
+			}
 		}
+		else
+		{
+			$errMsg = "You do not have permission to complete this action!";
+			$successM = false;
+		}
+	}
+	else
+	{
+		$errMsg = "You are not logged in. Log in to continue...";
+		$successM = false;
 	}
 }
 if ($_GET['admineditprofile'] == "true")
@@ -588,7 +648,7 @@ if ($_GET['admineditprofile'] == "true")
 			$isadm = (empty($_POST['isadmin'])) ? '0' : '1';
 			$ismo = (empty($_POST['ismod'])) ? '0' : '1';
 			$isedit = (empty($_POST['iseditor'])) ? '0' : '1';
-			$errMsg = $cmsUsers->admEditUser($uid, $isadm, $ismo, $isedit);
+			$errMsg = "SUCCESS CODE: ".$cmsUsers->admEditUser($uid, $isadm, $ismo, $isedit);
 		}
 	}
 }
@@ -1655,7 +1715,7 @@ ul.nav a { zoom: 1; }
 
 
     <div class="footer">
-      <p class="copy">&copy;2011 - 2017 <a href="http://www.jbud.org/">JBud.ORG</a> - Portal CMS version 0.4.1 Revision 4</p>
+      <p class="copy">&copy;2011 - 2017 <a href="http://www.jbud.org/">JBud.ORG</a> - Portal CMS version 0.4.2 Revision 5</p>
 	<p class="copy"><a target="_blank" href="http://validator.w3.org/"><img alt="Valid HTML5.0 Markup" title="Valid HTML5.0 Markup" src="cmsdata/themes/validhtml5.png" /></a>&nbsp;&nbsp;<a href="#top">Back to top</a>&nbsp;&nbsp;<a href="http://validator.w3.org/feed/" target="_blank" ><img alt="Valid RSS2.0 Markup" title="Valid RSS2.0 Markup" src="cmsdata/themes/validrss2.gif" /></a></p>
       <p>&nbsp;</p>
     </div>
