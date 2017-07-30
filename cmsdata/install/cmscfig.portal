@@ -1,0 +1,34 @@
+<?php
+
+$twittertag = "#TWITTER#";				// Tag for twitter shares.
+$apiurl = "#API#";					// API for URL Shortener (Recommended: "http://go.jbud.org/index.php?u=")
+$postsPerPage = #POSTSPERPAGE#;
+
+class cmsConfig {
+	// Database:
+	const USER = "#USER#";				// SQL Login Username.
+	const PASSW = "#PASSWORD#";			// SQL Login Password.
+	const DATABASE = "#DATABASE#";			// SQL Database Name.
+	const URL = "#SQLURL#";				// SQL Server Location.
+	
+	// Config:
+	const DBNEWS = "news";				// ONLY change this if you have a custom database structure.
+	const DOEMAIL = #DOEMAIL#;			// If true, emails are sent to all registered users for each news post.
+	
+	// Sessions:
+	const DBSESSIONS = "sessions";			// ONLY change this if you have a custom database structure.
+	
+	// Users:
+	const DBUSERS = "users";			// ONLY change this if you have a custom database structure.
+	//const NEWUSERMAIL = "";			// This is not yet used.
+	const FROMEMAILADDR = "#FROMEMAIL#";		// Email which subscribers' emails are sent "from"
+	const ADMINEMAIL = "#ADMINEMAIL#";		// Email to which comments are sent.
+	const SUPPORTEMAIL = "#SUPPORTEMAIL#";		// Email that is used to unsubscribe from news emails. (support email is recommended)
+
+	// Common:
+	const COOKIEURL = "#COOKIEURL#";		// Cookie URL.
+	const SITEURL = "#SITEURL#";			// Site URL.
+	const SITENAME = "#SITENAME#";			// Site name.
+}
+
+?>
