@@ -49,6 +49,8 @@ $numberOfPosts = $postsPerPage;
 $newsOffset = 0;
 $newsPosts = $cmsNews->getNumberOfNewsPosts();
 $errMsg = "&nbsp;";
+$successM = true;
+$MetaRefresh = "<meta http-equiv=\"refresh\" content=\"600\" url=\"".$cmsSiteAddress."\">";
 
 if (!empty($_GET['offset']))
 {
@@ -82,6 +84,8 @@ if ($_GET['login'] == "true")
 		if (!$login)
 		{
 			$errMsg = "Login Failed, the user/password combination was incorrect.";
+			$m_mode = "login";
+			$successM = false;
 		}
 		else
 		{
@@ -92,6 +96,7 @@ if ($_GET['login'] == "true")
 	{
 		$errMsg = "Failed to log in, please enter a password and username to continue.";
 		$m_mode = "login";
+		$successM = false;
 	}
 }
 if ($_GET['logout'] == "true")
@@ -99,39 +104,67 @@ if ($_GET['logout'] == "true")
 	if (!$cmsUsers->logout())
 	{
 		$errMsg = "failed to log out!";
+		$successM = false;
 	}
 }
 if ($_GET['editpost'] == "true")
 {
-    	if ($cmsSessions->verifySession($sid))
-    	{
+    if ($cmsSessions->verifySession($sid))
+    {
 		if ($cmsUsers->isAdmin($cmsSessions->getUidBySession($sid)) || $cmsUsers->isEditor($cmsSessions->getUidBySession($sid)))
-    		{
+    	{
 			$news = $cmsNews->editNews($_POST['newsid'], $_POST['title'], $_POST['body'], $_POST['uid']);
 			if (!$news)
 			{
 				$errMsg = "Edit Failed!";
+				$successM = false;
 			}
 			else
 			{
 				$cmsRSS->updaterss($cmsRSS->grss());
+				$errMsg = "Update Success!";
 			}
 		}
+		else
+		{
+			$errMsg = "You do not have permission to complete this action!";
+			$successM = false;
+		}
+	}
+	else
+	{
+		$errMsg = "You are not logged in. Log in to continue...";
+		$successM = false;
 	}
 }
 if ($_GET['rempost'] == "true" && !empty($_GET['post']))
 {
 	if ($cmsSessions->verifySession($sid))
-    	{
+    {
 		if ($cmsUsers->isAdmin($cmsSessions->getUidBySession($sid)) || $cmsUsers->isEditor($cmsSessions->getUidBySession($sid)))
-    		{
-    			$rem = $cmsNews->rem($_GET['post']);
-    			if (!$rem)
-    			{
-    				$errMsg = "Removal Failed!";
-    			}
-    		}
+    	{
+			$rem = $cmsNews->rem($_GET['post']);
+			if (!$rem)
+			{
+				$errMsg = "Failed to remove post!";
+				$successM = false;
+			}
+			else
+			{
+				$errMsg = "Post deleted!";
+			}
     	}
+		else
+		{
+			$errMsg = "You do not have permission to complete this action!";
+			$successM = false;
+		}
+	}
+	else
+	{
+		$errMsg = "You are not logged in. Log in to continue...";
+		$successM = false;
+	}
 }
 if ($_GET['postnew'] == "true")
 {
@@ -155,12 +188,14 @@ if ($_GET['postnew'] == "true")
     	}
     	else
     	{
-    	    $errMsg = "You are not permitted to post";
+    	    $errMsg = "You do not have permission to complete this action!";
+			$successM = false;
     	}
 	}
 	else
 	{
-	    $errMsg = "Your session could not be verified";
+	    $errMsg = "You are not logged in. Log in to continue...";
+		$successM = false;
 	}
 }
 if ($_GET['register'] == "true")
@@ -178,43 +213,68 @@ if ($_GET['register'] == "true")
 				{
 					$regfailedmessage = "Failed to Register, Please contact <a href='mailto:$cmsSupportEmail'>$cmsSupportEmail</a> ERROR2: $rez! ".mysql_error();
 					$regfailed = true;
+					$successM = false;
 				}
 				else
 				{
 					$login = $cmsUsers->login($_POST['user'], $_POST['pass']);
 					$newLogin = true;
+					$successM = false;
 				}
 			}
 			else
 			{
 				$regfailedmessage = "Username Already Exists!";
 				$regfailed = true;
+				$successM = false;
 			}
 		}
 		else
 		{
 			$regfailedmessage = "Your passwords do not match!";
 			$regfailed = true;
+			$successM = false;
 		}
 	}
 	else
 	{
 		$regfailedmessage = "One or more of the fields was blank! All fields are required to register";
 		$regfailed = true;
+		$successM = false;
 	}
 }
 if ($_GET['remaccount'] == "true")
 {
 	if ($cmsSessions->verifySession($sid))
-    	{
-    		$rem = $cmsUsers->removeUser($_POST['uid']);
-    		$cmsUsers->logout();
-		if (!$rem)
+    {
+		if ($cmsUsers->isAdmin($cmsSessions->getUidBySession($sid)))
 		{
-			$errMsg = "Removal Failed!";
+			$rem = $cmsUsers->removeUser($_POST['uid']);
+			$cmsUsers->logout();
+			if (!$rem)
+			{
+				$errMsg = "Failed to remove account!";
+				$successM = false;
+			}
+			else
+			{
+				$errMsg = "Account removed successfully!";
+			}
 		}
-    	}
+		else
+		{
+			$errMsg = "You do not have permission to complete this action!";
+			$successM = false;
+		}
+    }
+	else
+	{
+		$errMsg = "You are not logged in. Log in to continue...";
+		$successM = false;
+	}
 }
+
+##############################################################CONTINUE HERE####################################################
 if ($_GET['settings'] == "true")
 {
 	$settingsSiteName = $_POST['sitename'];
@@ -1484,7 +1544,7 @@ ul.nav a { zoom: 1; }
 
 
     <div class="footer">
-      <p class="copy">&copy;2011 - 2017 <a href="http://www.jbud.org/">JBud.ORG</a> - Portal CMS version 0.4.1 Revision 1</p>
+      <p class="copy">&copy;2011 - 2017 <a href="http://www.jbud.org/">JBud.ORG</a> - Portal CMS version 0.4.1 Revision 3</p>
 	<p class="copy"><a target="_blank" href="http://validator.w3.org/"><img alt="Valid HTML5.0 Markup" title="Valid HTML5.0 Markup" src="cmsdata/themes/validhtml5.png" /></a>&nbsp;&nbsp;<a href="#top">Back to top</a>&nbsp;&nbsp;<a href="http://validator.w3.org/feed/" target="_blank" ><img alt="Valid RSS2.0 Markup" title="Valid RSS2.0 Markup" src="cmsdata/themes/validrss2.gif" /></a></p>
       <p>&nbsp;</p>
     </div>
