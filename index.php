@@ -274,66 +274,120 @@ if ($_GET['remaccount'] == "true")
 	}
 }
 
-##############################################################CONTINUE HERE####################################################
+
 if ($_GET['settings'] == "true")
 {
-	$settingsSiteName = $_POST['sitename'];
-	$settingsTagLine = $_POST['tagline'];
-	$settingsSiteAddress = $_POST['siteaddress'];
-	$settingsSupportEmail = $_POST['supportemail'];
-	$settingsAboutText = $_POST['abouttext'];
-	$settingsAdScript = $_POST['adscript'];
-	$settingsSiteNote = $_POST['sitenote'];
-	$settingsSiteTheme = $_POST['theme'];
-	if (!empty($settingsSiteName) && !empty($settingsTagLine) && !empty($settingsSiteAddress))
-	{
-		if (!empty($settingsSupportEmail) && !empty($settingsAboutText) && !empty($settingsAdScript))
+	if ($cmsSessions->verifySession($sid))
+    {
+		if ($cmsUsers->isAdmin($cmsSessions->getUidBySession($sid)))
 		{
-			if (!empty($settingsSiteNote) && !empty($settingsSiteTheme))
+			$settingsSiteName = $_POST['sitename'];
+			$settingsTagLine = $_POST['tagline'];
+			$settingsSiteAddress = $_POST['siteaddress'];
+			$settingsSupportEmail = $_POST['supportemail'];
+			$settingsAboutText = $_POST['abouttext'];
+			$settingsAdScript = $_POST['adscript'];
+			$settingsSiteNote = $_POST['sitenote'];
+			$settingsSiteTheme = $_POST['theme'];
+			if (!empty($settingsSiteName) && !empty($settingsTagLine) && !empty($settingsSiteAddress))
 			{
-				$query = "UPDATE settingsb SET sitename='$settingsSiteName', abouttext='".$settingsAboutText."', adscript='".$settingsAdScript."', sitenote='".$settingsSiteNote."', tagline = '".$settingsTagLine."', siteaddress = '".$settingsSiteAddress."', supportemail = '".$settingsSupportEmail."', theme = '".$settingsSiteTheme."' WHERE id='1'";
-				$d = $cmsDatabase->db($query);
+				if (!empty($settingsSupportEmail) && !empty($settingsAboutText) && !empty($settingsAdScript))
+				{
+					if (!empty($settingsSiteNote) && !empty($settingsSiteTheme))
+					{
+						$query = "UPDATE settingsb SET sitename='$settingsSiteName', abouttext='".$settingsAboutText."', adscript='".$settingsAdScript."', sitenote='".$settingsSiteNote."', tagline = '".$settingsTagLine."', siteaddress = '".$settingsSiteAddress."', supportemail = '".$settingsSupportEmail."', theme = '".$settingsSiteTheme."' WHERE id='1'";
+						$d = $cmsDatabase->db($query);
+						if (!$d)
+						{
+							$errMsg = "Update failed!";
+							$successM = false;
+						}
+						else
+						{
+							$errMsg = "Settings updated successfully!";
+						}
+					}
+					else
+					{
+						$errMsg = "SettingsError0: One or more of the following fields were empty:<br />Site Note, or Site Theme";
+						$successM = false;
+					}
+				}
+				else
+				{
+					$errMsg = "SettingsError1: One or more of the following fields were empty:<br />Support Email, About Text, or Ad Script";
+					$successM = false;
+				}
 			}
 			else
 			{
-				$errMsg = "SettingsError0: One or more of the following fields were empty:<br />Site Note, or Site Theme";
+				$errMsg = "SettingsError2: One or more of the following fields were empty:<br />Site Name, Site Address, or Tag Line";
+				$successM = false;
 			}
 		}
 		else
 		{
-			$errMsg = "SettingsError1: One or more of the following fields were empty:<br />Support Email, About Text, or Ad Script";
+			$errMsg = "You do not have permission to complete this action!";
+			$successM = false;
 		}
-	}
+    }
 	else
 	{
-		$errMsg = "SettingsError2: One or more of the following fields were empty:<br />Site Name, Site Address, or Tag Line";
+		$errMsg = "You are not logged in. Log in to continue...";
+		$successM = false;
 	}
 }
 if ($_GET['navsettings'] == "true")
 {
-	$count = count($_POST);
-	for($i=0;$i<=$count-2;$i++)
-	{
-		$update = $_POST["link$i"];
-		if (!empty($update))
+	if ($cmsSessions->verifySession($sid))
+    {
+		if ($cmsUsers->isAdmin($cmsSessions->getUidBySession($sid)))
 		{
-			$query = "UPDATE links SET link='$update' WHERE id='$i'";
-			$d = $cmsDatabase->db($query);
-			if (!$d)
+			$count = count($_POST);
+			for($i=0;$i<=$count-2;$i++)
 			{
-				$errMsg = "Failed to update one or more links!";
+				$update = $_POST["link$i"];
+				if (!empty($update))
+				{
+					$query = "UPDATE links SET link='$update' WHERE id='$i'";
+					$d = $cmsDatabase->db($query);
+					if (!$d)
+					{
+						$errMsg = "Failed to update one or more links!";
+						$successM = false;
+					}
+					else
+					{
+						$errMsg = "Updated links successfully!";
+					}
+				}
+			}
+			$update = $_POST["link$i"];
+			if (!empty($update))
+			{
+				$query = "INSERT INTO links (link) VALUES ('$update')";
+				$d = $cmsDatabase->db($query);
+				if (!$d)
+				{
+					$errMsg = "Failed to add new link!";
+					$successM = false;
+				}
+				else
+				{
+					$errMsg = "New link added!";
+				}
 			}
 		}
-	}
-	$update = $_POST["link$i"];
-	if (!empty($update))
-	{
-		$query = "INSERT INTO links (link) VALUES ('$update')";
-		$d = $cmsDatabase->db($query);
-		if (!$d)
+		else
 		{
-			$errMsg = "Failed to add new link!";
+			$errMsg = "You do not have permission to complete this action!";
+			$successM = false;
 		}
+    }
+	else
+	{
+		$errMsg = "You are not logged in. Log in to continue...";
+		$successM = false;
 	}
 }
 if ($_GET['comment'] == "true")
@@ -345,28 +399,57 @@ if ($_GET['comment'] == "true")
 	else
 	{
 		$errMsg = "Failed to submit comment!";
+		$successM = false;
 	}
 }
 if ($_GET['remcomment'] == "true")
 {
 	if ($cmsSessions->verifySession($sid))
-    	{
+    {
 		if ($cmsUsers->isAdmin($cmsSessions->getUidBySession($sid)) || $cmsUsers->isEditor($cmsSessions->getUidBySession($sid)))
-    		{
-    			$cmsNews->remComment($_GET['c']);
-    		}
-    	}
+		{
+			$d = $cmsNews->remComment($_GET['c']);
+			if (!$d)
+			{
+				$errMsg = "Failed to remove comment!";
+				$successM = false;
+			}
+			else
+			{
+				$errMsg = "Comment removed successfully!";
+			}
+		}
+		else
+		{
+			$errMsg = "You do not have permission to complete this action!";
+			$successM = false;
+		}
+	}
+	else
+	{
+		$errMsg = "You are not logged in. Log in to continue...";
+		$successM = false;
+	}
 }
 if ($_GET['contact'] == "true")
 {
 	if (!empty($_POST['body']) && !empty($_POST['name']) && !empty($_POST['email']) && !empty($_POST['subject']))
 	{
-		$cmsUsers->contact($_POST['body'], $_POST['subject'], $_POST['name'], $_POST['email'], $cmsMisc->getIp());
+		if (!$cmsUsers->contact($_POST['body'], $_POST['subject'], $_POST['name'], $_POST['email'], $cmsMisc->getIp()))
+		{
+			$errMsg = "Failed to send email, please email us directly at ".$cmsSupportEmail;
+			$successM = false;
+		}
+		else
+		{
+			$errMsg = "Email sent successfully, you should receieve a reply within 48 hours.";
+		}
 	}
 	else
 	{
 		$m_mode = "contact";
 		$errMsg = "Failed to send contact message, one or more of the forms was empty";
+		$successM = false;
 	}
 }
 if ($_GET['editprofile'] == "true")
@@ -375,8 +458,8 @@ if ($_GET['editprofile'] == "true")
 	if (!empty($_POST['uid']))
 	{
 		if ($cmsSessions->verifySession($sid))
-    		{
-    			$info = $cmsUsers->getUserInfoById($_POST['uid']);
+    	{
+    		$info = $cmsUsers->getUserInfoById($_POST['uid']);
 			if (!empty($_POST['pass']) && !empty($_POST['npass']) && !empty($_POST['vpass']))
 			{
 				if ($cmsUsers->isPassValid($_POST['uid'], $_POST['pass']))
@@ -417,6 +500,11 @@ if ($_GET['editprofile'] == "true")
 	if ($failed)
 	{
 		$errMsg = "Failed to edit profile, contact the administrator!";
+		$successM = false;
+	}
+	else
+	{
+		$errMsg = "Profile updated successfully!";
 	}
 }
 if ($_GET['newpage'] == "true")
@@ -430,10 +518,32 @@ if ($_GET['newpage'] == "true")
 				$php = (empty($_POST['isphp'])) ? '0' : '1';
 				$active = (empty($_POST['isactive'])) ? '0' : '1';
 				$news = $cmsSettings->addPage($_POST['title'], $_POST['body'], $php, $active);
+				if (!$news)
+				{
+					$errMsg = "Failed to add page!";
+					$successM = false;
+				}
+			}
+			else
+			{
+				$errMsg = "Either title or body is empty, please complete the forms before saving!";
+				$m_mode = "pages";
+				$successM = false;
 			}
 		}
+		else
+		{
+			$errMsg = "You do not have permission to complete this action!";
+			$successM = false;
+		}
+	}
+	else
+	{
+		$errMsg = "You are not logged in. Log in to continue...";
+		$successM = false;
 	}
 }
+##############################################################CONTINUE HERE####################################################
 if ($_GET['editpage'] == "true")
 {
 	if ($cmsSessions->verifySession($sid))
@@ -1294,6 +1404,7 @@ ul.nav a { zoom: 1; }
 	{
 	?>
 	<h3>Edit page - Select a page to edit...</h3>
+	<p style="color:red; text-align:center;"><?php echo $errMsg;?></p>
 	<p>&nbsp;</p>
 	<p>&nbsp;</p>
 	<ul>
@@ -1544,7 +1655,7 @@ ul.nav a { zoom: 1; }
 
 
     <div class="footer">
-      <p class="copy">&copy;2011 - 2017 <a href="http://www.jbud.org/">JBud.ORG</a> - Portal CMS version 0.4.1 Revision 3</p>
+      <p class="copy">&copy;2011 - 2017 <a href="http://www.jbud.org/">JBud.ORG</a> - Portal CMS version 0.4.1 Revision 4</p>
 	<p class="copy"><a target="_blank" href="http://validator.w3.org/"><img alt="Valid HTML5.0 Markup" title="Valid HTML5.0 Markup" src="cmsdata/themes/validhtml5.png" /></a>&nbsp;&nbsp;<a href="#top">Back to top</a>&nbsp;&nbsp;<a href="http://validator.w3.org/feed/" target="_blank" ><img alt="Valid RSS2.0 Markup" title="Valid RSS2.0 Markup" src="cmsdata/themes/validrss2.gif" /></a></p>
       <p>&nbsp;</p>
     </div>
