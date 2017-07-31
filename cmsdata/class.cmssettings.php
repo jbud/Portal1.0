@@ -48,6 +48,7 @@ class cmsSettings {
 
 		$query = "UPDATE settingsb SET sitename='$settingsSiteName', abouttext='".$settingsAboutText."', adscript='".$settingsAdScript."', sitenote='".$settingsSiteNote."', tagline = '".$settingsTagLine."', siteaddress = '".$settingsSiteAddress."', supportemail = '".$settingsSupportEmail."', theme = '".$settingsSiteTheme."' WHERE id='1'";
 		$d = $cmsDatabase->db($query);
+		return !$d ? false : true;
 	}
 	function editLink($update, $i)
 	{
@@ -55,6 +56,7 @@ class cmsSettings {
 
 		$query = "UPDATE links SET link='$update' WHERE id='$i'";
 		$d = $cmsDatabase->db($query);
+		return !$d ? false : true;
 	}
 	function addLink($update)
 	{
@@ -62,6 +64,7 @@ class cmsSettings {
 
 		$query = "INSERT INTO links (link) VALUES ('$update')";
 		$d = $cmsDatabase->db($query);
+		return !$d ? false : true;
 	}
 	function addPage($name, $content, $php, $active)
 	{
@@ -69,6 +72,7 @@ class cmsSettings {
 
 		$query = "INSERT INTO pages (name, page, isphp, active) VALUES ('$name', '$content', '$php', '$active')";
 		$d = $cmsDatabase->db($query);
+		return !$d ? false : true;
 	}
 	function editPage($name, $content, $php, $active, $id)
 	{
@@ -76,6 +80,7 @@ class cmsSettings {
 
 		$query = "UPDATE pages SET name='$name', page='$content', isphp='$php', active='$active' WHERE id='$id'";
 		$d = $cmsDatabase->db($query);
+		return !$d ? false : true;
 	}
 	function remPage($id)
 	{
@@ -83,6 +88,7 @@ class cmsSettings {
 
 		$query = "DELETE FROM pages WHERE id='$id'";
 		$d = $cmsDatabase->db($query);
+		return !$d ? false : true;
 	}
 	function remLink($id)
 	{
@@ -90,6 +96,7 @@ class cmsSettings {
 		
 		$query = "DELETE FROM links WHERE id='$id'";
 		$d = $cmsDatabase->db($query);
+		return !$d ? false : true;
 	}
 	function getPage($id)
 	{
