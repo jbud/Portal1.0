@@ -788,9 +788,9 @@ $(function() {
 </script>
 <!--End JQUERY Script-->
 <!--Begin WYSIWYG Includes-->
-<script type="text/javascript" src="cmsdata/edit/ckeditor.js"></script>
-<script src="cmsdata/edit/sample.js" type="text/javascript"></script>
-<link href="cmsdata/edit/sample.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="cmsdata/edit2/ckeditor.js"></script>
+<script src="cmsdata/edit2/sample.js" type="text/javascript"></script>
+<link href="cmsdata/edit2/sample.css" rel="stylesheet" type="text/css" />
 <!--End WYSIWYG Includes-->
 <link rel="stylesheet" type="text/css" href="cmsdata/themes/<?php echo $cmsSiteTheme;?>/cmsstyles.css" />
 <!--[if lte IE 7]>
