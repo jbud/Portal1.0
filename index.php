@@ -407,7 +407,7 @@ if ($_GET['remcomment'] == "true")
 {
 	if ($cmsSessions->verifySession($sid))
     {
-		if ($cmsUsers->isAdmin($cmsSessions->getUidBySession($sid)) || $cmsUsers->isEditor($cmsSessions->getUidBySession($sid)))
+		if ($cmsUsers->isAdmin($cmsSessions->getUidBySession($sid)) || $cmsUsers->isMod($cmsSessions->getUidBySession($sid)))
 		{
 			$d = $cmsNews->remComment($_GET['c']);
 			if (!$d)

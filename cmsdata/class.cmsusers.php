@@ -211,7 +211,7 @@ class cmsUsers{
 		}
 		else
 		{
-			return array($id, $return['user'], $return['pass'], $return['email'], $return['posts'], $return['admin'], $return['subscriber'], $return['cmod'], $return['editor'], $return['ip'], $return['joined'], $return['lastlogin']);
+			return array($id, $return['user'], $return['pass'], $return['email'], $return['posts'], $return['admin'], $return['subscriber'], $return['mod'], $return['editor'], $return['ip'], $return['joined'], $return['lastlogin']);
 		}
 	}
 	function getUserThemeById($id)
@@ -279,7 +279,7 @@ class cmsUsers{
 	{
 		$cmsDatabase = new cmsDatabase;
 		
-		$query = "UPDATE ".cmsConfig::DBUSERS." SET cmod='1' WHERE id='$userId'";
+		$query = "UPDATE ".cmsConfig::DBUSERS." SET mod='1' WHERE id='$userId'";
 		$return = $cmsDatabase->db($query);
 		return (!$return) ? false : true;
 	}
@@ -325,7 +325,7 @@ class cmsUsers{
 		}
 		else
 		{
-			if ($return['cmod'] == 1)
+			if ($return['mod'] == 1)
 			{
 				return true;
 			}
