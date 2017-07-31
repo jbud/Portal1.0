@@ -791,9 +791,9 @@ $(function() {
 <!--End JQUERY Script-->
 <!--Begin WYSIWYG Includes-->
 <!--script src="cmsdata/edit2/ck.js" type="text/javascript"></script-->
-<link href="cmsdata/edit2/ck.css" rel="stylesheet" type="text/css" />
 <!--End WYSIWYG Includes-->
-<link rel="stylesheet" type="text/css" href="cmsdata/themes/<?php echo $cmsSiteTheme;?>/cmsstyles.css" />
+<link rel="stylesheet" type="text/css" href="cmsdata/themes/<?php echo $cmsSiteTheme;?>/cmsstyles.css?version=1.0" />
+<!--<link href="cmsdata/edit2/ck.css" rel="stylesheet" type="text/css" />-->
 <!--[if lte IE 7]>
 <style>
 .content { margin-right: -1px; } 
@@ -845,7 +845,7 @@ ul.nav a { zoom: 1; }
 	{
     ?>
 	    <h2>News<a href="<?php echo $cmsSiteAddress;?>?rss=true"><img src="cmsdata/themes/<?php echo $cmsSiteTheme;?>/rss.png" width='32' height='32' style="float:right" alt="Subscribe to RSS Feed" title="Subscribe to RSS Feed"/></a></h2>
-	    <p style="color:red; text-align:center;"><?php echo $errMsg;?></p>
+	    <p style="<?php if ($successM){echo "color:green;";}else{echo"color:red;";}?> text-align:center;"><?php echo $errMsg;?></p>
 	    <?php
 	    $e = 1;
 	    for ($i=$newsOffset;$i<=$numberOfPosts - 1;$i++)
@@ -945,13 +945,12 @@ ul.nav a { zoom: 1; }
 			    </table>
 		<form method="post" action="<?php echo $cmsSiteAddress.'?m=news&p='.$newsId.'&comment=true';?>">
 		
-		<table width="300">
+		<table width="80%">
 		 <?php 
 		if (!$loggedIn)
 		{
 		?>
-		 <tr><td><label>Name: </td><td><input name="name" value=""/></label></td></tr>   		
-	    	 <tr><td><label>Email: </td><td><input name="email" value=""/></label></td></tr>
+		 <tr><td><p>You must be logged in to comment!</p></td></tr>
 		<?php
 		}
 		else
@@ -962,13 +961,14 @@ ul.nav a { zoom: 1; }
 		 ?>
 		 	<input type="hidden" name="name" value="<?php echo $name;?>">
 		 	<input type="hidden" name="email" value="<?php echo $email;?>">	
-		 <?php
-		}
-		?>
+		 
 		 
 		 <input type="hidden" name="newsid" value="<?php echo $newsId;?>">
 	    	 <tr><td>Comment: </td><td><textarea name="comment" cols='40' rows='10'></textarea></td></tr>
 	    	 <tr><td><input type="submit" value="Post"></td><td>&nbsp;</td></tr>
+<?php
+		}
+		?>
 	    	</table>
 	    	<?php
 	    	}
@@ -997,8 +997,8 @@ ul.nav a { zoom: 1; }
 	    	
 	    ?>
 	    <form method="post" action="<?php echo $cmsSiteAddress.'?editpost=true';?>">
-	    	 <p><label>Title: <input name="title" value="<?php echo $newsTitle;?>"/></label></p>
-	    	 <p class="form"><textarea id="ckeditor" name="body" cols='67' rows='30'><?php echo $newsBody;?></textarea></p>
+	    	 <p><label>Title: <input name="title" class="title" value="<?php echo $newsTitle;?>"/></label></p>
+	    	 <p class="form"><textarea class="ckeditor" name="body" cols='67' rows='30'><?php echo $newsBody;?></textarea></p>
 	    	 <input type="hidden" name="newsid" value="<?php echo $newsId;?>"/>
 	    	 <input type="hidden" name="uid" value="<?php echo $user;?>"/>
 	    	 <p><input type="submit" value="Edit"/></p>
@@ -1021,10 +1021,10 @@ ul.nav a { zoom: 1; }
 	{
     ?>
 	    <h2>Login</h2>
-	   <p style="color:red; text-align:center;"><?php echo $errMsg;?></p>
+	   <p style="<?php if ($successM){echo "color:green;";}else{echo"color:red;";}?> text-align:center;"><?php echo $errMsg;?></p>
 	    <p>&nbsp;</p>
 	    <form method="post" action="<?php echo $cmsSiteAddress.'?login=true';?>">
-	    	<table width="300">
+	    	<table width="80%">
 	    	<tr><td><label>User: </td><td><input name="user" maxlength="15"></label></td></tr>
 	    	<tr><td><label>Password: </td><td><input type="password" name="pass" maxlength="15"></label></td></tr>
 	    	<tr><td><input type="submit" value="Login"></td><td>&nbsp;</td></tr>
@@ -1068,7 +1068,7 @@ ul.nav a { zoom: 1; }
 	    <p>&nbsp;</p>
 	    <p>&nbsp;</p>
 	    <form method="post" action="<?php echo $cmsSiteAddress.'?register=true&m=reg';?>">
-	    	<table width="300">
+	    	<table width="80%">
 		    	<tr><td><label>Username: </td><td><input name="user" maxlength="15"></label></td></tr>
 		    	<tr><td><label>Email: </td><td><input name="email"></label></td></tr>
 		    	<tr><td><label>Password: </td><td><input type="password" name="pass" maxlength="15"></label></td></tr>
@@ -1101,7 +1101,7 @@ ul.nav a { zoom: 1; }
 		    <p>Failed - <?php echo $regfailedmessage; ?></p>
 		    <p>&nbsp;</p>
 		    <form method="post" action="<?php echo $cmsSiteAddress.'?register=true&m=reg';?>">
-		    	<table width="300">
+		    	<table width="80%">
 			    	<tr><td><label>Username: </td><td><input name="user" value="<?php echo $_POST['user']; ?>" maxlength="15" /></label></td></tr>
 			    	<tr><td><label>Email: </td><td><input name="email" value="<?php echo $_POST['email']; ?>" /></label></td></tr>
 			    	<tr><td><label>Password: </td><td><input type="password" name="pass" maxlength="15" /></label></td></tr>
@@ -1139,8 +1139,8 @@ ul.nav a { zoom: 1; }
 	    	{
 	    ?>
 	    <form method="post" action="<?php echo $cmsSiteAddress.'?postnew=true';?>">
-	    	 <p><label>Title: <input name="title" value=""/></label></p>
-	    	 <p class="form"><textarea id="ckeditor" name="body" cols='67' rows='30'></textarea></p>
+	    	 <p><label>Title: <input name="title" class="title" value=""/></label></p>
+	    	 <p class="form"><textarea class="ckeditor" name="body" cols='67' rows='30'></textarea></p>
 	    	 <input type="hidden" name="uid" value="<?php echo $user;?>"/>
 	    	 <p><input type="submit" value="Post"/></p>
 	    </form>
@@ -1176,7 +1176,7 @@ ul.nav a { zoom: 1; }
 		$id = $cmsSessions->getUidBySession($sid);
 		$user = $cmsUsers->getUserInfoById($id);
 	    ?>
-		<table width="300">
+		<table width="80%">
 	    		<tr><td>User ID:</td><td><?php echo $user[0];?></td></tr>
 	    		<tr><td>Username: </td><td><?php echo $user[1];?></td></tr>
 	    		<tr><td>Email: </td><td><?php echo $user[3];?></td></tr>
@@ -1201,7 +1201,7 @@ ul.nav a { zoom: 1; }
 	    	
     		<form method="post" action="<?php echo $cmsSiteAddress.'?editprofile=true';?>">
     			<input type="hidden" name="uid" value="<?php echo $id;?>"/>
-    			<table width="300">
+    			<table width="80%">
     			<tr><td><label>Change Email: </td><td><input name="email" value="<?php echo $user[3];?>"/></label></td></tr>
 		 	<tr><td><label>Current password: </td><td><input name="pass" value=""/></label></td></tr>
 		 	<tr><td><label>New password: </td><td><input name="npass" value=""/></label></td></tr>
@@ -1276,7 +1276,7 @@ ul.nav a { zoom: 1; }
 		    	{
 		    		$user = $cmsUsers->getUserInfoById($uid);
 		    ?>
-			<table width="300">
+			<table width="80%">
 		    		<tr><td>User ID:</td><td><?php echo $user[0];?></td></tr>
 		    		<tr><td>Username: </td><td><?php echo $user[1];?></td></tr>
 		    		<tr><td>Email: </td><td><?php echo $user[3];?></td></tr>
@@ -1320,7 +1320,7 @@ ul.nav a { zoom: 1; }
 	    	$about = str_replace("&nbsp;", "&amp;nbsp;", $cmsAboutText);
 	    ?>
 		<form method="post" action="<?php echo $cmsSiteAddress.'?settings=true';?>">
-		<table width="300">
+		<table width="80%">
 		 
 		 <tr><td><label>Site Address: </td><td><input name="siteaddress" value="<?php echo $cmsSiteAddress;?>"/></label></td></tr>   		
 	    	 <tr><td><label>Site Name: </td><td><input name="sitename" value="<?php echo $cmsSiteName;?>"/></label></td></tr>
@@ -1347,8 +1347,8 @@ ul.nav a { zoom: 1; }
 			 ?>
 		 </select></td><td>&nbsp;</td></tr>
 		 </table>
-	    	 About Page:<br/><textarea id="ckeditor" name="abouttext" cols='67' rows='30'><?php echo $about;?></textarea><br/>
-	    	 Site Note:<br/><textarea id="ckeditor" name="sitenote" cols='67' rows='30'><?php echo $cmsSiteNote;?></textarea><br/>
+	    	 About Page:<br/><textarea class="ckeditor" name="abouttext" cols='67' rows='30'><?php echo $about;?></textarea><br/>
+	    	 Site Note:<br/><textarea class="ckeditor" name="sitenote" cols='67' rows='30'><?php echo $cmsSiteNote;?></textarea><br/>
 	    	 Ad Script:<br/><textarea name="adscript" cols='67' rows='30'><?php echo $cmsAdScript;?></textarea><br/>
 	    	 <input type="submit" value="Post"/>
 	    </form>
@@ -1388,7 +1388,7 @@ ul.nav a { zoom: 1; }
 		    	}
 	    ?>
 		<form method="post" action="<?php echo $cmsSiteAddress.'?navsettings=true';?>">
-		<table width="300">
+		<table width="80%">
 		 <?php $i=0; foreach ($links as $l) { $id = $cmsSettings->getLinkId($link);?>
 		 <tr><td><label>Link #<?php echo $i; ?>: </td><td><input name="link<?php echo $i;?>" value="<?php echo $l;?>"/></label><a href="<?php echo $cmsSiteAddress;?>?remlink=true&link=<?php echo $id;?>">-Delete-</a></td></tr>   
 		<?php $i++; }?>
@@ -1428,7 +1428,7 @@ ul.nav a { zoom: 1; }
 	    	 <tr><td><label>Name: </td><td><input name="name" value=""/></label></td></tr>
 	    	 <tr><td><label>Subject: </td><td><input name="subject" value=""/></label></td></tr>
 	    	 <tr><td><label>Email Address: </td><td><input name="email" value=""/></label></td></tr>
-	    	 <tr><td>Email: </td><td><textarea id="ckeditor" cols='67' rows='30' name="body" cols='40' rows='20'></textarea></td></tr>
+	    	 <tr><td>Email: </td><td><textarea class="ckeditor" cols='67' rows='30' name="body" cols='40' rows='20'></textarea></td></tr>
 	    	 <tr><td><input type="submit" value="Post"/></td><td>&nbsp;</td></td></tr>
 	    </table>
 	    </form>
@@ -1465,9 +1465,7 @@ ul.nav a { zoom: 1; }
 	{
 	?>
 	<h3>Edit page - Select a page to edit...</h3>
-	<p style="color:red; text-align:center;"><?php echo $errMsg;?></p>
-	<p>&nbsp;</p>
-	<p>&nbsp;</p>
+	<p style="<?php if ($successM){echo "color:green;";}else{echo"color:red;";}?> text-align:center;"><?php echo $errMsg;?></p>
 	<ul>
 	<?php
 	    foreach($pages as $p)
@@ -1519,7 +1517,7 @@ ul.nav a { zoom: 1; }
             <?php if (!$useWysiwyg) {?><a href="<?php echo $cmsSiteAddress.$wlink;?>">Enable WYSIWYG Editor</a> - (Unsaved changes will be lost)<br />
             <?php } else {?><a href="<?php echo $cmsSiteAddress.$wlink;?>">Disable WYSIWYG Editor</a> - (Unsaved changes will be lost)<br /><?php }?>
 	    <form method="post" action="<?php echo $cmsSiteAddress.'?'.$edornew.'page=true';?>">
-	    	 <p><label>Title: <input name="title" value="<?php echo $page['name'];?>"/></label></p>
+	    	 <p><label>Title: <input name="title" class="title" value="<?php echo $page['name'];?>"/></label></p>
 	    	 <input type="hidden" name="id" value="<?php echo $pageId;?>"/>
 	    	 <p><label>PHP: <input type="checkbox" name="isphp" value="1" /></label> - PHP scripts may not start with '&lt;'</p>
 			 <p><label>Active: <input type="checkbox" name="isactive" checked="checked" value="1" /></label> - If checked, page link will show in the nav panel.</p>
@@ -1554,7 +1552,7 @@ ul.nav a { zoom: 1; }
 	    <?php if (empty($_POST['id']) && empty($_GET['id']) && empty($_POST['name'])){?>
 	    <form method="post" action="<?php echo $cmsSiteAddress.'?m=users';?>">
 		<p>Find a user to manage. (Enter a name or ID to find a user.)</p>
-	    <table width="300">
+	    <table width="80%">
 	    	 <tr><td><label>Name: </td><td><input name="name" value=""/></label></td></tr>
 	    	 <tr><td><label>ID: </td><td><input name="id" value=""/></label></td></tr>
 	    	 <tr><td><input type="submit" value="Post"/></td><td>&nbsp;</td></td></tr>
@@ -1596,7 +1594,7 @@ ul.nav a { zoom: 1; }
 		$editorChecked = ($cmsUsers->isEditor($id)) ? "checked=\"checked\"" : "";
 		$user = $cmsUsers->getUserInfoById($id);
 	    ?>
-			<table width="300">
+			<table width="80%">
 	    		<tr><td>User ID:</td><td><?php echo $user[0];?></td></tr>
 	    		<tr><td>Username: </td><td><?php echo $user[1];?></td></tr>
 	    		<tr><td>Email: </td><td><?php echo $user[3];?></td></tr>
@@ -1607,7 +1605,7 @@ ul.nav a { zoom: 1; }
 			<p>&nbsp;</p>
 			<form method="post" action="<?php echo $cmsSiteAddress.'?admineditprofile=true';?>">
     			<input type="hidden" name="uid" value="<?php echo $id;?>"/>
-    			<table width="300">
+    			<table width="80%">
 					<tr><td><label>Site Admin: </td><td><input type="checkbox" name="isadmin" <?php echo $adminChecked;?> value="1" /></label></td></tr>
 	    			<tr><td><label>Comment Moderator: </td><td><input type="checkbox" name="ismod" <?php echo $modChecked;?> value="1" /></label></td></tr>
 	    			<tr><td><label>News Editor: </td><td><input type="checkbox" name="iseditor" <?php echo $editorChecked;?> value="1" /></label></td></tr>
@@ -1715,10 +1713,10 @@ ul.nav a { zoom: 1; }
     ?>
 
 <script type="text/javascript">
-CKEDITOR.replace( 'ckeditor' );
+CKEDITOR.replaceAll( 'ckeditor' );
 </script>
     <div class="footer">
-      <p class="copy">&copy;2011 - 2017 <a href="http://www.jbud.org/">JBud.ORG</a> - Portal CMS version 0.4.2 Revision 6</p>
+      <p class="copy">&copy;2011 - 2017 <a href="http://www.jbud.org/">JBud.ORG</a> - Portal CMS version 0.4.3 Revision 10</p>
 	<p class="copy"><a target="_blank" href="http://validator.w3.org/"><img alt="Valid HTML5.0 Markup" title="Valid HTML5.0 Markup" src="cmsdata/themes/validhtml5.png" /></a>&nbsp;&nbsp;<a href="#top">Back to top</a>&nbsp;&nbsp;<a href="http://validator.w3.org/feed/" target="_blank" ><img alt="Valid RSS2.0 Markup" title="Valid RSS2.0 Markup" src="cmsdata/themes/validrss2.gif" /></a></p>
       <p>&nbsp;</p>
     </div>

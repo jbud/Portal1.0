@@ -168,3 +168,41 @@ ul.nav a:hover, ul.nav a:active, ul.nav a:focus {
 	 font-size:12px;
 	font-weight:100;
 }
+.title {
+	width: 80%;
+}
+input:not([type="submit"]) {
+  display: block;
+  margin: 0;
+  font-family: sans-serif;
+  appearance: none;
+  box-shadow: none;
+  border-radius: none;
+  padding: 10px;
+  border: solid 1px #fff;
+  transition: box-shadow 0.3s, border 0.3s;
+}
+input:focus:not([type="submit"]) {
+  outline: none;
+  border: solid 1px #FFF;
+  box-shadow: 0 0 5px 1px #FFF;
+}
+input[type="submit"]{
+	background-color: #3f3;
+    border: none;
+    color: black;
+    font-weight: bold;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+	border-radius: 25px;
+  	
+}
+input[type="submit"]:hover{
+	background-color: #6f6;
+	box-shadow: 0 0 5px 1px #FFF;
+}

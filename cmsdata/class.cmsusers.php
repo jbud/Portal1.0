@@ -15,7 +15,7 @@ class cmsUsers{
 	function contact($body, $subject, $name, $email, $ip)
 	{
 		$bod = cmsConfig::SITENAME." Support Email from ".$name." @ ".$ip;
-		$bod .= "\n-------------------\n\n";
+		$bod .= "\r\n-------------------\r\n\r\n";
 		$bod .= $body;
 		$this->emailfrom(cmsConfig::SUPPORTEMAIL, $subject, $bod, $email);
 	}
@@ -92,9 +92,32 @@ class cmsUsers{
 	function sendCommentEmail(/*Array*/$news)
 	{
 		$newsSubject = "[Comment] ".$news[0];
-		$newsBody = $news[1]."\n\n----------\n".cmsConfig::SITEURL."\n----------\nNew comment on ".cmsConfig::SITENAME."\n";
-		$e = cmsConfig::ADMINEMAIL;
+		$newsBody = $news[1]."\r\n\r\n----------\r\n".cmsConfig::SITEURL."\r\n----------\r\nNew comment on ".cmsConfig::SITENAME."\r\n";
+		$moderators = getCommentModeratorEmails();
+		$e = cmsConfig::ADMINEMAIL.", ".$moderators;
 		$this->email($e, $newsSubject, $newsBody);
+	}
+	function getCommentModeratorEmails()
+	{
+		$uids = getAllUids();
+		$emails = "";
+		foreach ($uids as $u)
+		{
+			if (isMod($u))
+			{
+				$e = getUserInfoById($u);
+				$e = $e['email'];
+				$emails .= $e.", ";
+			}
+		}
+		if (empty($emails))
+		{
+			return "";
+		}
+		else
+		{
+			return $emails;
+		}
 	}
 	function doesUserExist($name)
 	{

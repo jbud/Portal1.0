@@ -361,8 +361,8 @@ switch( $_POST['step'] ){
 		 ?>
 		 </select></td><td>&nbsp;</td></tr>
 		 </table>
-	    	 About Page:<br/><textarea id="ckeditor" name="abouttext" cols='67' rows='30'></textarea><br/>
-	    	 Site Note:<br/><textarea id="ckeditor" name="sitenote" cols='67' rows='30'></textarea><br/>
+	    	 About Page:<br/><textarea class="ckeditor" name="abouttext" cols='67' rows='30'></textarea><br/>
+	    	 Site Note:<br/><textarea class="ckeditor" name="sitenote" cols='67' rows='30'></textarea><br/>
 	    	 Ad Script:<br/><textarea name="adscript" cols='67' rows='30'></textarea><br/>
 	    	 <input name="step" type="hidden" value="7">
 	    	 <input type="submit" value="Post"/>
@@ -414,7 +414,7 @@ switch( $_POST['step'] ){
 <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
 </div>
 <script type="text/javascript">
-CKEDITOR.replace( 'ckeditor' );
+CKEDITOR.replaceAll( 'ckeditor' );
 </script>
 <div class="footer">
       <p class="copy">&copy;2011 <a href="http://www.jbud.org/">JBud.ORG</a> - Portal CMS version 0.3 BETA</p>
