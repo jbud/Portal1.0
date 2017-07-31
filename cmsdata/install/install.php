@@ -90,9 +90,7 @@ function readThemes()
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<script type="text/javascript" src="../edit/ckeditor.js"></script>
-<script src="../edit/sample.js" type="text/javascript"></script>
-<link href="../edit/sample.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../edit2/ckeditor.js"></script>
 <link rel="stylesheet" type="text/css" href="../themes/default/cmsstyles.css" /> 
 <title>Portal CMS - Install</title>
 <body>
@@ -363,8 +361,8 @@ switch( $_POST['step'] ){
 		 ?>
 		 </select></td><td>&nbsp;</td></tr>
 		 </table>
-	    	 About Page:<br/><textarea class="ckeditor" name="abouttext" cols='67' rows='30'></textarea><br/>
-	    	 Site Note:<br/><textarea class="ckeditor" name="sitenote" cols='67' rows='30'></textarea><br/>
+	    	 About Page:<br/><textarea id="ckeditor" name="abouttext" cols='67' rows='30'></textarea><br/>
+	    	 Site Note:<br/><textarea id="ckeditor" name="sitenote" cols='67' rows='30'></textarea><br/>
 	    	 Ad Script:<br/><textarea name="adscript" cols='67' rows='30'></textarea><br/>
 	    	 <input name="step" type="hidden" value="7">
 	    	 <input type="submit" value="Post"/>
@@ -415,6 +413,9 @@ switch( $_POST['step'] ){
 ?>
 <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
 </div>
+<script type="text/javascript">
+CKEDITOR.replace( 'ckeditor' );
+</script>
 <div class="footer">
       <p class="copy">&copy;2011 <a href="http://www.jbud.org/">JBud.ORG</a> - Portal CMS version 0.3 BETA</p>
 	<p class="copy"><a target="_blank" href="http://validator.w3.org/"><img alt="Valid HTML5.0 Markup" title="Valid HTML5.0 Markup" src="../themes/validhtml5.png" /></a>&nbsp;&nbsp;<a href="#top">Back to top</a>&nbsp;&nbsp;<a href="http://validator.w3.org/feed/" target="_blank" ><img alt="Valid RSS2.0 Markup" title="Valid RSS2.0 Markup" src="../themes/validrss2.gif" /></a></p>

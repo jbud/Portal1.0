@@ -766,6 +766,7 @@ switch($mode)
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js">
 </script>
 <!--Begin JQUERY Scrolling Nav Panel Script-->
+<script type="text/javascript" src="cmsdata/edit2/ckeditor.js"></script>
 <script type="text/javascript">
 $(function() {
     var $sidebar   = $(".sidebar1"),
@@ -785,12 +786,12 @@ $(function() {
         }
     });
 });
+
 </script>
 <!--End JQUERY Script-->
 <!--Begin WYSIWYG Includes-->
-<script type="text/javascript" src="cmsdata/edit2/ckeditor.js"></script>
-<script src="cmsdata/edit2/sample.js" type="text/javascript"></script>
-<link href="cmsdata/edit2/sample.css" rel="stylesheet" type="text/css" />
+<!--script src="cmsdata/edit2/ck.js" type="text/javascript"></script-->
+<link href="cmsdata/edit2/ck.css" rel="stylesheet" type="text/css" />
 <!--End WYSIWYG Includes-->
 <link rel="stylesheet" type="text/css" href="cmsdata/themes/<?php echo $cmsSiteTheme;?>/cmsstyles.css" />
 <!--[if lte IE 7]>
@@ -997,7 +998,7 @@ ul.nav a { zoom: 1; }
 	    ?>
 	    <form method="post" action="<?php echo $cmsSiteAddress.'?editpost=true';?>">
 	    	 <p><label>Title: <input name="title" value="<?php echo $newsTitle;?>"/></label></p>
-	    	 <p class="form"><textarea class="ckeditor" name="body" cols='67' rows='30'><?php echo $newsBody;?></textarea></p>
+	    	 <p class="form"><textarea id="ckeditor" name="body" cols='67' rows='30'><?php echo $newsBody;?></textarea></p>
 	    	 <input type="hidden" name="newsid" value="<?php echo $newsId;?>"/>
 	    	 <input type="hidden" name="uid" value="<?php echo $user;?>"/>
 	    	 <p><input type="submit" value="Edit"/></p>
@@ -1139,7 +1140,7 @@ ul.nav a { zoom: 1; }
 	    ?>
 	    <form method="post" action="<?php echo $cmsSiteAddress.'?postnew=true';?>">
 	    	 <p><label>Title: <input name="title" value=""/></label></p>
-	    	 <p class="form"><textarea class="ckeditor" name="body" cols='67' rows='30'></textarea></p>
+	    	 <p class="form"><textarea id="ckeditor" name="body" cols='67' rows='30'></textarea></p>
 	    	 <input type="hidden" name="uid" value="<?php echo $user;?>"/>
 	    	 <p><input type="submit" value="Post"/></p>
 	    </form>
@@ -1346,8 +1347,8 @@ ul.nav a { zoom: 1; }
 			 ?>
 		 </select></td><td>&nbsp;</td></tr>
 		 </table>
-	    	 About Page:<br/><textarea class="ckeditor" name="abouttext" cols='67' rows='30'><?php echo $about;?></textarea><br/>
-	    	 Site Note:<br/><textarea class="ckeditor" name="sitenote" cols='67' rows='30'><?php echo $cmsSiteNote;?></textarea><br/>
+	    	 About Page:<br/><textarea id="ckeditor" name="abouttext" cols='67' rows='30'><?php echo $about;?></textarea><br/>
+	    	 Site Note:<br/><textarea id="ckeditor" name="sitenote" cols='67' rows='30'><?php echo $cmsSiteNote;?></textarea><br/>
 	    	 Ad Script:<br/><textarea name="adscript" cols='67' rows='30'><?php echo $cmsAdScript;?></textarea><br/>
 	    	 <input type="submit" value="Post"/>
 	    </form>
@@ -1427,7 +1428,7 @@ ul.nav a { zoom: 1; }
 	    	 <tr><td><label>Name: </td><td><input name="name" value=""/></label></td></tr>
 	    	 <tr><td><label>Subject: </td><td><input name="subject" value=""/></label></td></tr>
 	    	 <tr><td><label>Email Address: </td><td><input name="email" value=""/></label></td></tr>
-	    	 <tr><td>Email: </td><td><textarea class="ckeditor" cols='67' rows='30' name="body" cols='40' rows='20'></textarea></td></tr>
+	    	 <tr><td>Email: </td><td><textarea id="ckeditor" cols='67' rows='30' name="body" cols='40' rows='20'></textarea></td></tr>
 	    	 <tr><td><input type="submit" value="Post"/></td><td>&nbsp;</td></td></tr>
 	    </table>
 	    </form>
@@ -1713,7 +1714,9 @@ ul.nav a { zoom: 1; }
     }
     ?>
 
-
+<script type="text/javascript">
+CKEDITOR.replace( 'ckeditor' );
+</script>
     <div class="footer">
       <p class="copy">&copy;2011 - 2017 <a href="http://www.jbud.org/">JBud.ORG</a> - Portal CMS version 0.4.2 Revision 6</p>
 	<p class="copy"><a target="_blank" href="http://validator.w3.org/"><img alt="Valid HTML5.0 Markup" title="Valid HTML5.0 Markup" src="cmsdata/themes/validhtml5.png" /></a>&nbsp;&nbsp;<a href="#top">Back to top</a>&nbsp;&nbsp;<a href="http://validator.w3.org/feed/" target="_blank" ><img alt="Valid RSS2.0 Markup" title="Valid RSS2.0 Markup" src="cmsdata/themes/validrss2.gif" /></a></p>
