@@ -93,7 +93,7 @@ class cmsUsers{
 	{
 		$newsSubject = "[Comment] ".$news[0];
 		$newsBody = $news[1]."\r\n\r\n----------\r\n".cmsConfig::SITEURL."\r\n----------\r\nNew comment on ".cmsConfig::SITENAME."\r\n";
-		$moderators = getCommentModeratorEmails();
+		$moderators = $this->getCommentModeratorEmails();
 		$e = cmsConfig::ADMINEMAIL.", ".$moderators;
 		$this->email($e, $newsSubject, $newsBody);
 	}
