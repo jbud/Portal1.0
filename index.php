@@ -1203,9 +1203,9 @@ ul.nav a { zoom: 1; }
     			<input type="hidden" name="uid" value="<?php echo $id;?>"/>
     			<table width="80%">
     			<tr><td><label>Change Email: </td><td><input name="email" value="<?php echo $user[3];?>"/></label></td></tr>
-		 	<tr><td><label>Current password: </td><td><input name="pass" value=""/></label></td></tr>
-		 	<tr><td><label>New password: </td><td><input name="npass" value=""/></label></td></tr>
-		 	<tr><td><label>Verify new password: </td><td><input name="vpass" value=""/></label></td></tr>
+		 	<tr><td><label>Current password: </td><td><input type="password" name="pass" value=""/></label></td></tr>
+		 	<tr><td><label>New password: </td><td><input type="password" name="npass" value=""/></label></td></tr>
+		 	<tr><td><label>Verify new password: </td><td><input type="password" name="vpass" value=""/></label></td></tr>
 		 	<?php $themes = $cmsMisc->readThemes();?>
 		    	 <tr><td>Custom Theme:</td><td><select name="theme">
 		<?php
