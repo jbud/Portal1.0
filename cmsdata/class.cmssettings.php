@@ -6,7 +6,7 @@ class cmsSettings {
 
 		$query = "SELECT * FROM settingsb WHERE id='1'";
 		$return = $cmsDatabase->db($query, true);
-		$query = "SELECT link FROM links ORDER BY id ASC";
+		$query = "SELECT * FROM links ORDER BY id ASC";
 		$linkz = $cmsDatabase->db($query, true, true);
 		$query = "SELECT COUNT(*) FROM links";
 		$linkc = $cmsDatabase->db($query, true);

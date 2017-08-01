@@ -1389,7 +1389,7 @@ ul.nav a { zoom: 1; }
 	    ?>
 		<form method="post" action="<?php echo $cmsSiteAddress.'?navsettings=true';?>">
 		<table width="80%">
-		 <?php $i=0; foreach ($links as $l) { $id = $l['id']);?>
+		 <?php $i=0; foreach ($links as $l) { $id = $l['id'];?>
 <tr><td><label>Link &num;<?php echo $i; ?>: </td><td><input name="link<?php echo $i;?>" value="<?php echo $l['link'];?>"/></label><a href="<?php echo $cmsSiteAddress;?>?remlink=true&link=<?php echo $id;?>">-Delete-</a></td></tr>
 		<?php $i++; }?>
 		 <tr><td><label>Add new link: </td><td><input name="link<?php echo $i;?>" value=""/></label></td></tr>
