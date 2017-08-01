@@ -99,13 +99,13 @@ class cmsUsers{
 	}
 	function getCommentModeratorEmails()
 	{
-		$uids = getAllUids();
+		$uids = $this->getAllUids();
 		$emails = "";
 		foreach ($uids as $u)
 		{
-			if (isMod($u))
+			if ($this->isMod($u))
 			{
-				$e = getUserInfoById($u);
+				$e = $this->getUserInfoById($u);
 				$e = $e['email'];
 				$emails .= $e.", ";
 			}
