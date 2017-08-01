@@ -25,7 +25,10 @@ class cmsSettings {
 		}
 		for($i=0;$i<=$linkc[0] - 1;$i++)
 		{
-			$links[$i] = $linkz[$i]['link'];
+			//$links[$i] = $linkz[$i]['link'];
+            $links[$i] = array();
+            $links[$i]['id'] = $linkz[$i]['id'];
+            $links[$i]['link'] = $linkz[$i]['link'];
 		}
 
 		$cmsSiteName = $return['sitename'];
@@ -121,7 +124,7 @@ class cmsSettings {
 			return false;
 		}
 	}
-	function getLinkId($link)
+	function getLinkId($link)// Deprecated!
 	{
 		$cmsDatabase = new cmsDatabase;
 

@@ -830,7 +830,7 @@ ul.nav a { zoom: 1; }
       }
       foreach($links as $l)
       {
-      	echo "<li>".$l."</li>";
+      	echo "<li>".$l['link']."</li>";
       }
       ?>
     </ul>
@@ -1383,14 +1383,14 @@ ul.nav a { zoom: 1; }
 		    	$i = 0;
 		    	foreach($links as $a)
 		    	{
-		    		$links[$i] = str_replace('"', "&quot;", $a);
+		    		$links[$i]['link'] = str_replace('"', "&quot;", $a['link']);
 		    		$i++;
 		    	}
 	    ?>
 		<form method="post" action="<?php echo $cmsSiteAddress.'?navsettings=true';?>">
 		<table width="80%">
-		 <?php $i=0; foreach ($links as $l) { $id = $cmsSettings->getLinkId($link);?>
-		 <tr><td><label>Link #<?php echo $i; ?>: </td><td><input name="link<?php echo $i;?>" value="<?php echo $l;?>"/></label><a href="<?php echo $cmsSiteAddress;?>?remlink=true&link=<?php echo $id;?>">-Delete-</a></td></tr>   
+		 <?php $i=0; foreach ($links as $l) { $id = $l['id']);?>
+<tr><td><label>Link &num;<?php echo $i; ?>: </td><td><input name="link<?php echo $i;?>" value="<?php echo $l['link'];?>"/></label><a href="<?php echo $cmsSiteAddress;?>?remlink=true&link=<?php echo $id;?>">-Delete-</a></td></tr>
 		<?php $i++; }?>
 		 <tr><td><label>Add new link: </td><td><input name="link<?php echo $i;?>" value=""/></label></td></tr>
 	    	 <tr><td><input type="submit" value="Post"/></td><td></td></tr>
@@ -1471,7 +1471,7 @@ ul.nav a { zoom: 1; }
 	    foreach($pages as $p)
       	    {
       		?>
-      		<li><a href="<?php echo $cmsSiteAddress;?>?m=pages&p=<?php echo $p['id'];?>&w=true"><?php echo $p['name'];?></a> - <a href="<?php echo $cmsSiteAddress;?>?m=pages&rempage=true&pid=<?php echo $p['id'];?>">-Delete-</a></li>
+<li><a href="<?php echo $cmsSiteAddress;?>?m=page&p=<?php echo $p['id'];?>"><?php echo $p['name'];?></a> - <a href="<?php echo $cmsSiteAddress;?>?m=pages&p=<?php echo $p['id'];?>&w=true">-Edit-</a>&nbsp;<a href="<?php echo $cmsSiteAddress;?>?m=pages&rempage=true&pid=<?php echo $p['id'];?>">-Delete-</a></li>
       		<?php
       	    }
       	    ?>
