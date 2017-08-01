@@ -50,6 +50,7 @@ $newsOffset = 0;
 $newsPosts = $cmsNews->getNumberOfNewsPosts();
 $errMsg = "&nbsp;";
 $successM = true;
+$actionM = false; 
 $MetaRefresh = "<meta http-equiv=\"refresh\" content=\"600\" url=\"".$cmsSiteAddress."\">";
 
 if (!empty($_GET['offset']))
@@ -90,6 +91,7 @@ if ($_GET['login'] == "true")
 		else
 		{
 			$newLogin = true;
+			$actionM = true;
 		}
 	}
 	else
@@ -123,6 +125,7 @@ if ($_GET['editpost'] == "true")
 			{
 				$cmsRSS->updaterss($cmsRSS->grss());
 				$errMsg = "Update Success!";
+				$actionM = true;
 			}
 		}
 		else
@@ -152,6 +155,7 @@ if ($_GET['rempost'] == "true" && !empty($_GET['post']))
 			else
 			{
 				$errMsg = "Post deleted!";
+				$actionM = true;
 			}
     	}
 		else
@@ -179,6 +183,7 @@ if ($_GET['postnew'] == "true")
 			    if (!$news)
 			    {
 			    	$errMsg = "Post Failed!";
+					$successM = false;
 			    }
 		    	else
 		    	{
@@ -220,7 +225,7 @@ if ($_GET['register'] == "true")
 				{
 					$login = $cmsUsers->login($_POST['user'], $_POST['pass']);
 					$newLogin = true;
-					$successM = false;
+					$successM = true;
 				}
 			}
 			else
@@ -260,6 +265,7 @@ if ($_GET['remaccount'] == "true")
 			else
 			{
 				$errMsg = "Account removed successfully!";
+				$actionM = true;
 			}
 		}
 		else
@@ -306,6 +312,7 @@ if ($_GET['settings'] == "true")
 						else
 						{
 							$errMsg = "Settings updated successfully!";
+							$actionM = true;
 						}
 					}
 					else
@@ -360,6 +367,7 @@ if ($_GET['navsettings'] == "true")
 					else
 					{
 						$errMsg = "Updated links successfully!";
+						$actionM = true;
 					}
 				}
 			}
@@ -376,6 +384,7 @@ if ($_GET['navsettings'] == "true")
 				else
 				{
 					$errMsg = "New link added!";
+					$actionM = true;
 				}
 			}
 		}
@@ -506,6 +515,7 @@ if ($_GET['editprofile'] == "true")
 	else
 	{
 		$errMsg = "Profile updated successfully!";
+		$actionM = true;
 	}
 }
 if ($_GET['newpage'] == "true")
@@ -527,6 +537,7 @@ if ($_GET['newpage'] == "true")
 				else
 				{
 					$errMsg = "Page added successfully!";
+					$actionM = true;
 				}
 			}
 			else
@@ -566,6 +577,7 @@ if ($_GET['editpage'] == "true")
 			else
 			{
 				$errMsg = "Page editted successfully!";
+				$actionM = true;
 			}
 		}
 		else
@@ -595,6 +607,7 @@ if ($_GET['rempage'] == "true" && !empty($_GET['pid']))
 			else
 			{
 				$errMsg = "Page removed!";
+				$actionM = true;
 			}
 		}
 		else
@@ -624,6 +637,7 @@ if ($_GET['remlink'] == "true" && !empty($_GET['link']))
 			else
 			{
 				$errMsg = "Link removed!";
+				$actionM = true;
 			}
 		}
 		else
@@ -786,8 +800,10 @@ $(function() {
         }
     });
 });
-
 </script>
+<?php if ($actionM){?>
+<meta http-equiv="refresh" content="3; url=<?php echo $cmsSiteAddress;?>">
+<?php }?>
 <!--End JQUERY Script-->
 <!--Begin WYSIWYG Includes-->
 <!--script src="cmsdata/edit2/ck.js" type="text/javascript"></script-->
@@ -840,12 +856,13 @@ ul.nav a { zoom: 1; }
 
 
   <div class="content">
+   <p style="<?php if ($successM){echo "color:green;";}else{echo"color:red;";}?> text-align:center;"><?php echo $errMsg;?><?php if ($actionM){ echo " - please wait..."; } ?></p>
     <?php
     	if ($mode == 1)
 	{
     ?>
 	    <h2>News<a href="<?php echo $cmsSiteAddress;?>?rss=true"><img src="cmsdata/themes/<?php echo $cmsSiteTheme;?>/rss.png" width='32' height='32' style="float:right" alt="Subscribe to RSS Feed" title="Subscribe to RSS Feed"/></a></h2>
-	    <p style="<?php if ($successM){echo "color:green;";}else{echo"color:red;";}?> text-align:center;"><?php echo $errMsg;?></p>
+	   
 	    <?php
 	    $e = 1;
 	    for ($i=$newsOffset;$i<=$numberOfPosts - 1;$i++)
@@ -1021,7 +1038,7 @@ ul.nav a { zoom: 1; }
 	{
     ?>
 	    <h2>Login</h2>
-	   <p style="<?php if ($successM){echo "color:green;";}else{echo"color:red;";}?> text-align:center;"><?php echo $errMsg;?></p>
+	  
 	    <p>&nbsp;</p>
 	    <form method="post" action="<?php echo $cmsSiteAddress.'?login=true';?>">
 	    	<table width="80%">
@@ -1465,7 +1482,6 @@ ul.nav a { zoom: 1; }
 	{
 	?>
 	<h3>Edit page - Select a page to edit...</h3>
-	<p style="<?php if ($successM){echo "color:green;";}else{echo"color:red;";}?> text-align:center;"><?php echo $errMsg;?></p>
 	<ul>
 	<?php
 	    foreach($pages as $p)
