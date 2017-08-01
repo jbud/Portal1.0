@@ -109,8 +109,7 @@ class cmsUsers{
 			if ($this->isMod($u))
 			{
 				$e = $this->getUserInfoById($u);
-				$e = $e['email'];
-				$emails .= $e.", ";
+				$emails .= $e[3].", ";
 			}
 		}
 		if (empty($emails))
