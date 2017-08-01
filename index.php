@@ -872,7 +872,7 @@ ul.nav a { zoom: 1; }
 		    ?>
 			    <h3><a href="<?php echo $cmsSiteAddress;?>?m=news&amp;p=<?php echo $newsId;?>"><?php echo $newsTitle; ?></a> - <span class="smallinfo"><?php echo $newsDate; ?> PST by <?php echo $newsAuthor; ?></span>
 			    </h3>
-			    <p><?php if ($span){ echo "<span class='small'>"; } echo $newsBody; if ($span){ echo "</span>"; } ?> <br /><span class="smallinfo"><a href="<?php echo $cmsSiteAddress;?>?m=news&amp;p=<?php echo $newsId;?>#comments">-<?php echo $cmsNews->countComments($newsId);?> Comment<?php if ($cmsNews->countComments($newsId) != 1){echo "s";}?>-</a></span><?php if ($isAdmin || $isEditor) {?><span class="smallinfo"> | <a href="<?php echo $cmsSiteAddress;?>?m=edit&amp;post=<?php echo $newsId;?>">-Edit-</a> | <a href="<?php echo $cmsSiteAddress?>?rempost=true&amp;post=<?php echo $newsId;?>">-Delete-</a></span><?php }?></p>
+			    <p><?php if ($span){ echo "<span class='small'>"; } ?><div class="newspost"><?php echo $newsBody; ?></div><?php if ($span){ echo "</span>"; } ?> <br /><span class="smallinfo"><a href="<?php echo $cmsSiteAddress;?>?m=news&amp;p=<?php echo $newsId;?>#comments">-<?php echo $cmsNews->countComments($newsId);?> Comment<?php if ($cmsNews->countComments($newsId) != 1){echo "s";}?>-</a></span><?php if ($isAdmin || $isEditor) {?><span class="smallinfo"> | <a href="<?php echo $cmsSiteAddress;?>?m=edit&amp;post=<?php echo $newsId;?>">-Edit-</a> | <a href="<?php echo $cmsSiteAddress?>?rempost=true&amp;post=<?php echo $newsId;?>">-Delete-</a></span><?php }?></p>
 	    <?php
 	    	}
 	    }
@@ -1714,6 +1714,8 @@ ul.nav a { zoom: 1; }
 
 <script type="text/javascript">
 CKEDITOR.replaceAll( 'ckeditor' );
+var $limit = $(".content");
+$limit.siblings(".newspost").css("max-width", $limit.width()+"px");
 </script>
     <div class="footer">
       <p class="copy">&copy;2011 - 2017 <a href="http://www.jbud.org/">JBud.ORG</a> - Portal CMS version 0.4.3 Revision 10</p>
