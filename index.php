@@ -464,7 +464,8 @@ if ($_GET['contact'] == "true")
 }
 if ($_GET['editprofile'] == "true")
 {
-	$failed = true;
+	$failed = false;
+	$editMessage = "";
 	if (!empty($_POST['uid']))
 	{
 		if ($cmsSessions->verifySession($sid))
@@ -472,51 +473,90 @@ if ($_GET['editprofile'] == "true")
     		$info = $cmsUsers->getUserInfoById($_POST['uid']);
 			if (!empty($_POST['pass']) && !empty($_POST['npass']) && !empty($_POST['vpass']))
 			{
-				if ($cmsUsers->isPassValid($_POST['uid'], $_POST['pass']))
+				if (password_verify($_POST['pass'], $info[2]))
 				{
 					if ($_POST['npass'] == $_POST['vpass'])
 					{
-						if ($cmsUsers->changePass($_POST['uid'], $_POST['npass']))
+						$phpass = password_hash($_POST['npass'], PASSWORD_DEFAULT);
+						if ($cmsUsers->changePass($_POST['uid'], $phpass))
 						{
-							$failed = false;
+							$editMessage .= "Password Updated";
 						}
 					}
+					else
+					{
+						$editMessage .= "Password update failed, new passwords do not match";
+						$failed = true;
+					}
+				}
+				else
+				{
+					$editMessage .= "Password update failed, original password invalid";
+					$failed = true;
 				}
 			}
 			if (!empty($_POST['theme']))
 			{
-				if ($cmsUsers->setUserTheme($_POST['uid'], $_POST['theme']))
+				if ($cmsUsers->getUserThemeById($_POST['uid']) != $_POST['theme'])
 				{
-					$failed = false;
+					if ($cmsUsers->setUserTheme($_POST['uid'], $_POST['theme']))
+					{
+						if (!empty($editMessage))
+						{
+							$editMessage .= ", ";
+						}
+						$editMessage .= "theme updated";
+					}
 				}
 			}
 			if (!empty($_POST['email']) && $_POST['email'] != $info[3])
 			{
 				if ($cmsUsers->changeEmail($_POST['uid'], $_POST['email']))
 				{
-					$failed = false;
+					if (!empty($editMessage))
+					{
+						$editMessage .= ", ";
+					}
+					$editMessage .= "Email Updated";
 				}
 			}
 			if (empty($_POST['subscriber']))
 			{
-				$cmsUsers->removeSubscriber($_POST['uid']);
+				if ($info[6] == 1)
+				{
+					$cmsUsers->removeSubscriber($_POST['uid']);
+					if (!empty($editMessage))
+					{
+						$editMessage .= ", ";
+					}
+					$editMessage .= "unsubscribed.";
+				}
 			}
 			else
 			{
-				$cmsUsers->addSubscriber($_POST['uid']);
+				if ($info[6] != 1)
+				{
+					$cmsUsers->addSubscriber($_POST['uid']);
+					if (!empty($editMessage))
+					{
+						$editMessage .= ", ";
+					}
+					$editMessage .= "subscribed to new news posts";
+				}
 			}
 		}
 	}
 	if ($failed)
 	{
-		$errMsg = "Failed to edit profile, contact the administrator!";
+		$errMsg = "Not all edits successful!<br/>";
 		$successM = false;
 	}
 	else
 	{
-		$errMsg = "Profile updated successfully!";
+		$errMsg = "Profile updated successfully!<br/>";
 		$actionM = true;
 	}
+	$errMsg .= $editMessage;
 }
 if ($_GET['newpage'] == "true")
 {

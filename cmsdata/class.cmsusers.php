@@ -385,7 +385,8 @@ class cmsUsers{
 	function isPassValid($id, $pass)
 	{
 		$profile = $this->getUserInfoById($id);
-		if ($profile[2] == $pass)
+		$passhd = $profile[2];
+		if (password_verify($pass, $passhd))
 		{
 			return true;
 		}
