@@ -206,3 +206,8 @@ input[type="submit"]:hover{
 	background-color: #6f6;
 	box-shadow: 0 0 5px 1px #FFF;
 }
+
+input[type="submit"]:disabled{
+	background-color: #5f5f5f;
+	cursor: auto;
+}

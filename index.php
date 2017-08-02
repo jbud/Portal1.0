@@ -840,6 +840,29 @@ $(function() {
         }
     });
 });
+function retry(){
+	$("#submit1").val("Send").removeAttr("disabled");
+	$("#errMsg").html("");
+}
+
+function validemail(email) {
+    var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+    return pattern.test(email);	
+}
+
+function preSubmitEmailCheck(){
+	$("#submit1").val("loading...").attr("disabled","disabled");
+	var email = $("#email1").val();
+	if (validemail(email)){
+		$("#form1").submit();
+	}
+	else
+	{
+		$("#errMsg").html("Invalid email address!").css("color", "red");
+		setTimeout(retry,3000);
+		return false;
+	}
+}
 </script>
 <?php if ($actionM){?>
 <meta http-equiv="refresh" content="3; url=<?php echo $cmsSiteAddress;?>">
@@ -848,7 +871,7 @@ $(function() {
 <!--Begin WYSIWYG Includes-->
 <!--script src="cmsdata/edit2/ck.js" type="text/javascript"></script-->
 <!--End WYSIWYG Includes-->
-<link rel="stylesheet" type="text/css" href="cmsdata/themes/<?php echo $cmsSiteTheme;?>/cmsstyles.css?version=1.0" />
+<link rel="stylesheet" type="text/css" href="cmsdata/themes/<?php echo $cmsSiteTheme;?>/cmsstyles.css?version=1.1" />
 <!--<link href="cmsdata/edit2/ck.css" rel="stylesheet" type="text/css" />-->
 <!--[if lte IE 7]>
 <style>
@@ -896,7 +919,7 @@ ul.nav a { zoom: 1; }
 
 
   <div class="content">
-   <p style="<?php if ($successM){echo "color:green;";}else{echo"color:red;";}?> text-align:center;"><?php echo $errMsg;?><?php if ($actionM){ echo " - please wait..."; } ?></p>
+   <p id="errMsg" style="<?php if ($successM){echo "color:green;";}else{echo"color:red;";}?> text-align:center;"><?php echo $errMsg;?><?php if ($actionM){ echo " - please wait..."; } ?></p>
     <?php
     	if ($mode == 1)
 	{
@@ -1124,13 +1147,13 @@ ul.nav a { zoom: 1; }
 	   
 	    <p>&nbsp;</p>
 	    <p>&nbsp;</p>
-	    <form method="post" action="<?php echo $cmsSiteAddress.'?register=true&m=reg';?>">
+	    <form method="post" id="form1" action="<?php echo $cmsSiteAddress.'?register=true&m=reg';?>">
 	    	<table width="80%">
 		    	<tr><td><label>Username: </td><td><input name="user" maxlength="15"></label></td></tr>
-		    	<tr><td><label>Email: </td><td><input name="email"></label></td></tr>
+		    	<tr><td><label>Email: </td><td><input name="email" id="email1"></label></td></tr>
 		    	<tr><td><label>Password: </td><td><input type="password" name="pass" maxlength="15"></label></td></tr>
 		    	<tr><td><label>Verify Password: </td><td><input type="password" name="vpass" maxlength="15"></label></td></tr>
-		    	<tr><td><input type="submit" value="Register"></td><td>&nbsp;</td></tr>
+		    	<tr><td><input type="submit" id="submit1" onclick="preSubmitEmailCheck()" value="Register"/></td><td>&nbsp;</td></tr>
 	    	</table>
 	    </form>
 	    <p>&nbsp;</p>
@@ -1480,13 +1503,13 @@ ul.nav a { zoom: 1; }
     ?>
 	    <h2>Contact Us</h2>
 	     
-	    <form method="post" action="<?php echo $cmsSiteAddress.'?contact=true';?>">
+	    <form method="post" id='form1' action="<?php echo $cmsSiteAddress.'?contact=true';?>">
 	    <table width="100%">
 	    	 <tr><td><label>Name: </td><td><input name="name" value=""/></label></td></tr>
 	    	 <tr><td><label>Subject: </td><td><input name="subject" value=""/></label></td></tr>
-	    	 <tr><td><label>Email Address: </td><td><input name="email" value=""/></label></td></tr>
+	    	 <tr><td><label>Email Address: </td><td><input name="email" id="email1" value=""/></label></td></tr>
 	    	 <tr><td>Email: </td><td><textarea class="ckeditor" cols='67' rows='30' name="body" cols='40' rows='20'></textarea></td></tr>
-	    	 <tr><td><input type="submit" value="Post"/></td><td>&nbsp;</td></td></tr>
+	    	 <tr><td>&nbsp;</td><td><input type="submit" id="submit1" onclick="preSubmitEmailCheck()" value="Send"/></td></td></tr>
 	    </table>
 	    </form>
 	    <p>&nbsp;</p>
@@ -1774,7 +1797,7 @@ var $limit = $(".content");
 $limit.siblings(".newspost").css("max-width", $limit.width()+"px");
 </script>
     <div class="footer">
-      <p class="copy">&copy;2011 - 2017 <a href="http://www.jbud.org/">JBud.ORG</a> - Portal CMS version 0.4.3 Revision 15</p>
+      <p class="copy">&copy;2011 - 2017 <a href="http://www.jbud.org/">JBud.ORG</a> - Portal CMS version 0.4.4 Revision 24</p>
 	<p class="copy"><a target="_blank" href="http://validator.w3.org/"><img alt="Valid HTML5.0 Markup" title="Valid HTML5.0 Markup" src="cmsdata/themes/validhtml5.png" /></a>&nbsp;&nbsp;<a href="#top">Back to top</a>&nbsp;&nbsp;<a href="http://validator.w3.org/feed/" target="_blank" ><img alt="Valid RSS2.0 Markup" title="Valid RSS2.0 Markup" src="cmsdata/themes/validrss2.gif" /></a></p>
       <p>&nbsp;</p>
     </div>
