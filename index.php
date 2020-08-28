@@ -50,7 +50,7 @@ $newsOffset = 0;
 $newsPosts = $cmsNews->getNumberOfNewsPosts();
 $errMsg = "&nbsp;";
 $successM = true;
-$actionM = false; 
+$actionM = false;
 $MetaRefresh = "<meta http-equiv=\"refresh\" content=\"600\" url=\"".$cmsSiteAddress."\">";
 
 if (!empty($_GET['offset']))
@@ -179,7 +179,7 @@ if ($_GET['postnew'] == "true")
 			if (!empty($_POST['body']))
 			{
 			    $news = $cmsNews->postNews($_POST['title'], $_POST['body'], $_POST['uid']);
-			
+
 			    if (!$news)
 			    {
 			    	$errMsg = "Post Failed!";
@@ -847,7 +847,7 @@ function retry(){
 
 function validemail(email) {
     var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
-    return pattern.test(email);	
+    return pattern.test(email);
 }
 
 function preSubmitEmailCheck(){
@@ -875,8 +875,8 @@ function preSubmitEmailCheck(){
 <!--<link href="cmsdata/edit2/ck.css" rel="stylesheet" type="text/css" />-->
 <!--[if lte IE 7]>
 <style>
-.content { margin-right: -1px; } 
-ul.nav a { zoom: 1; } 
+.content { margin-right: -1px; }
+ul.nav a { zoom: 1; }
 </style>
 <![endif]-->
 </head>
@@ -925,7 +925,7 @@ ul.nav a { zoom: 1; }
 	{
     ?>
 	    <h2>News<a href="<?php echo $cmsSiteAddress;?>?rss=true"><img src="cmsdata/themes/<?php echo $cmsSiteTheme;?>/rss.png" width='32' height='32' style="float:right" alt="Subscribe to RSS Feed" title="Subscribe to RSS Feed"/></a></h2>
-	   
+
 	    <?php
 	    $e = 1;
 	    for ($i=$newsOffset;$i<=$numberOfPosts - 1;$i++)
@@ -958,7 +958,7 @@ ul.nav a { zoom: 1; }
 	    }
 	    ?>
 	    <p>&nbsp;</p>
-	    <?php 
+	    <?php
 	    if ($showPrevNews)
 	    {
 	    $off = $newsOffset - $postsPerPage;
@@ -967,8 +967,8 @@ ul.nav a { zoom: 1; }
 	    <?php
 	    }
 	    ?>
-	    <?php 
-	    if ($showNextNews) 
+	    <?php
+	    if ($showNextNews)
 	    {
 	    $off = $newsOffset + $postsPerPage;
 	    ?>
@@ -982,9 +982,9 @@ ul.nav a { zoom: 1; }
 	{
     ?>
 	    <h2>News</h2>
-	    
+
 	    <?php
-	    
+
 	    ?>
 		    <p>&nbsp;</p>
 		    <?php
@@ -1024,9 +1024,9 @@ ul.nav a { zoom: 1; }
 			    ?>
 			    </table>
 		<form method="post" action="<?php echo $cmsSiteAddress.'?m=news&p='.$newsId.'&comment=true';?>">
-		
+
 		<table width="80%">
-		 <?php 
+		 <?php
 		if (!$loggedIn)
 		{
 		?>
@@ -1040,9 +1040,9 @@ ul.nav a { zoom: 1; }
 		    	$email = $user[3];
 		 ?>
 		 	<input type="hidden" name="name" value="<?php echo $name;?>">
-		 	<input type="hidden" name="email" value="<?php echo $email;?>">	
-		 
-		 
+		 	<input type="hidden" name="email" value="<?php echo $email;?>">
+
+
 		 <input type="hidden" name="newsid" value="<?php echo $newsId;?>">
 	    	 <tr><td>Comment: </td><td><textarea name="comment" cols='40' rows='10'></textarea></td></tr>
 	    	 <tr><td><input type="submit" value="Post"></td><td>&nbsp;</td></tr>
@@ -1074,7 +1074,7 @@ ul.nav a { zoom: 1; }
 	    	$newsAuthor = $newsArray[4];
 	    	$newsBody = $newsArray[1];
 	    	$user = $cmsSessions->getUidBySession($sid);
-	    	
+
 	    ?>
 	    <form method="post" action="<?php echo $cmsSiteAddress.'?editpost=true';?>">
 	    	 <p><label>Title: <input name="title" class="title" value="<?php echo $newsTitle;?>"/></label></p>
@@ -1101,7 +1101,7 @@ ul.nav a { zoom: 1; }
 	{
     ?>
 	    <h2>Login</h2>
-	  
+
 	    <p>&nbsp;</p>
 	    <form method="post" action="<?php echo $cmsSiteAddress.'?login=true';?>">
 	    	<table width="80%">
@@ -1144,7 +1144,7 @@ ul.nav a { zoom: 1; }
 	{
     ?>
 	    <h2>Register</h2>
-	   
+
 	    <p>&nbsp;</p>
 	    <p>&nbsp;</p>
 	    <form method="post" id="form1" action="<?php echo $cmsSiteAddress.'?register=true&m=reg';?>">
@@ -1172,9 +1172,9 @@ ul.nav a { zoom: 1; }
 	{
     ?>
 	    <h2>Register</h2>
-	   
+
 	    <p>&nbsp;</p>
-	    <?php 
+	    <?php
 	    if ($regfailed)
 	    {
 	    ?>
@@ -1189,13 +1189,13 @@ ul.nav a { zoom: 1; }
 			    	<tr><td><input type="submit" value="Register"></td><td>&nbsp;</td></tr>
 		    	</table>
 		    </form>
-	    <?php 
+	    <?php
 	    }
 	    else
 	    {
 	    ?>
 	    <p>Registration Complete!</p>
-	    <?php 
+	    <?php
 	    }
 	    ?>
 	    <p>&nbsp;</p>
@@ -1224,7 +1224,7 @@ ul.nav a { zoom: 1; }
 	    	 <input type="hidden" name="uid" value="<?php echo $user;?>"/>
 	    	 <p><input type="submit" value="Post"/></p>
 	    </form>
-	    <?php 
+	    <?php
 	    }
 	    else
 	    {
@@ -1276,9 +1276,9 @@ ul.nav a { zoom: 1; }
 				<?php if ($user[6] == 1) {?>
 	    			[Subscriber]
 	    		<?php } ?></td><td></td></tr>
-	    		
+
 	    	</table>
-	    	
+
     		<form method="post" action="<?php echo $cmsSiteAddress.'?editprofile=true';?>">
     			<input type="hidden" name="uid" value="<?php echo $id;?>"/>
     			<table width="80%">
@@ -1364,7 +1364,7 @@ ul.nav a { zoom: 1; }
 		    		<?php if ($user[5] == 1) {?>
 		    			<tr><td>[Admin]</td><td></td></tr>
 		    		<?php } ?>
-		    		
+
 		    	</table>
 		    <?php
 		    	}
@@ -1401,8 +1401,8 @@ ul.nav a { zoom: 1; }
 	    ?>
 		<form method="post" action="<?php echo $cmsSiteAddress.'?settings=true';?>">
 		<table width="80%">
-		 
-		 <tr><td><label>Site Address: </td><td><input name="siteaddress" value="<?php echo $cmsSiteAddress;?>"/></label></td></tr>   		
+
+		 <tr><td><label>Site Address: </td><td><input name="siteaddress" value="<?php echo $cmsSiteAddress;?>"/></label></td></tr>
 	    	 <tr><td><label>Site Name: </td><td><input name="sitename" value="<?php echo $cmsSiteName;?>"/></label></td></tr>
 	    	 <tr><td><label>Tag Line: </td><td><input name="tagline" value="<?php echo $cmsTagLine;?>"/></label></td></tr>
 	    	 <tr><td><label>Support Email: </td><td><input name="supportemail" value="<?php echo $cmsSupportEmail;?>"/></label></td></tr>
@@ -1438,7 +1438,7 @@ ul.nav a { zoom: 1; }
 	    {
 	    ?>
 	    <p>Warning: You need to be logged in to change settings.</p>
-	    <?php 
+	    <?php
 	    }
 	    ?>
 	    <p>&nbsp;</p>
@@ -1482,7 +1482,7 @@ ul.nav a { zoom: 1; }
 	    {
 	    ?>
 	    <p>Warning: You need to be logged in to change settings.</p>
-	    <?php 
+	    <?php
 	    }
 	    ?>
 	    <p>&nbsp;</p>
@@ -1502,7 +1502,7 @@ ul.nav a { zoom: 1; }
 	{
     ?>
 	    <h2>Contact Us</h2>
-	     
+
 	    <form method="post" id='form1' action="<?php echo $cmsSiteAddress.'?contact=true';?>">
 	    <table width="100%">
 	    	 <tr><td><label>Name: </td><td><input name="name" value=""/></label></td></tr>
@@ -1528,7 +1528,7 @@ ul.nav a { zoom: 1; }
 	elseif ($mode == 11)
 	{
     ?>
-	    
+
 	     <?php
 	     	$page = $cmsSettings->getPage($pageId);
 	     ?>
@@ -1588,7 +1588,7 @@ ul.nav a { zoom: 1; }
 		 }
 		 $w = "class=\"ckeditor\"";
 	 }
-	 
+
       ?>
       	<h3>Edit page</h3>
       	<p>&nbsp;</p>
@@ -1606,7 +1606,7 @@ ul.nav a { zoom: 1; }
 	    <p>&nbsp;</p>
 	    <p>&nbsp;</p>
 	    <p>&nbsp;</p>
-    <?php 
+    <?php
     	   }
     	   ?>
     	   <p>&nbsp;</p>
@@ -1637,7 +1637,7 @@ ul.nav a { zoom: 1; }
 	    	 <tr><td><input type="submit" value="Post"/></td><td>&nbsp;</td></td></tr>
 	    </table>
 	    </form>
-		<?php 
+		<?php
 		}
 		elseif (!empty($_POST['name']))
 		{
@@ -1659,11 +1659,11 @@ ul.nav a { zoom: 1; }
 		?>
 			<li>No users found!</li>
 		<?php
-      	}	
+      	}
 		?>
 		</ul>
-			<?php 
-		
+			<?php
+
 		}
 		elseif (!empty($_POST['id']) || !empty($_GET['id']))
 		{
@@ -1710,7 +1710,7 @@ ul.nav a { zoom: 1; }
     	else
     	{
     ?>
-    	    <p>&nbsp;</p>	
+    	    <p>&nbsp;</p>
 	    <p style="text-align:center;">An error occurred: Error1 (Mode is unset!)</p>
 	    <p>&nbsp;</p>
 	    <p>&nbsp;</p>
@@ -1775,7 +1775,7 @@ ul.nav a { zoom: 1; }
       			<p>&nbsp;</p>
    				<p>&nbsp;</p>
       			</div>
-      		<?php 
+      		<?php
       		}
       		?>
     <?php
@@ -1787,7 +1787,7 @@ ul.nav a { zoom: 1; }
 	     <?php echo $cmsAdScript;?>
 		 <p>&nbsp;</p>
     </div>
-    <?php 
+    <?php
     }
     ?>
 
@@ -1797,7 +1797,7 @@ var $limit = $(".content");
 $limit.siblings(".newspost").css("max-width", $limit.width()+"px");
 </script>
     <div class="footer">
-      <p class="copy">&copy;2011 - 2017 <a href="http://www.jbud.org/">JBud.ORG</a> - Portal CMS version 0.4.4 Revision 24</p>
+      <p class="copy">&copy;2011 - 2020 <a href="http://www.jbud.net/">JBud</a> - Portal CMS version 0.5.4 Revision 24</p>
 	<p class="copy"><a target="_blank" href="http://validator.w3.org/"><img alt="Valid HTML5.0 Markup" title="Valid HTML5.0 Markup" src="cmsdata/themes/validhtml5.png" /></a>&nbsp;&nbsp;<a href="#top">Back to top</a>&nbsp;&nbsp;<a href="http://validator.w3.org/feed/" target="_blank" ><img alt="Valid RSS2.0 Markup" title="Valid RSS2.0 Markup" src="cmsdata/themes/validrss2.gif" /></a></p>
       <p>&nbsp;</p>
     </div>

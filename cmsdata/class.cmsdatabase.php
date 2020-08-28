@@ -1,4 +1,5 @@
 <?php
+include_once('mysql2i.class.php');
 class cmsDatabase {
 	function doSql($args) // use c0re MySQL function.
 	{
@@ -7,20 +8,20 @@ class cmsDatabase {
 		{
 			return false; // unable to connect, bad password, bad username, or sql server offline.
 			die(mysql_error());
-		} 
-		else 
+		}
+		else
 		{
 			mysql_select_db($args['db']);
 			if ($args['type'] == "RETURN")
 			{
 				return mysql_query($args['query'], $conn);
-			}	
+			}
 			if ($args['type'] == "RETURNARRAY")
 			{
 				$q = mysql_query($args['query'], $conn);
 				if (!$q)
 				{
-					die(mysql_error()); 
+					die(mysql_error());
 				}
 				else
 				{
@@ -33,7 +34,7 @@ class cmsDatabase {
 				$q = mysql_query($args['query'], $conn);
 				if (!$q)
 				{
-					die(mysql_error()); 
+					die(mysql_error());
 				}
 				else
 				{
@@ -46,7 +47,7 @@ class cmsDatabase {
 					return $return;
 				}
 			}
-			else 
+			else
 			{
 				return false; // no valid type recieved
 			}

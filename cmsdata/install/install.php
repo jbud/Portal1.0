@@ -1,4 +1,5 @@
 <?php
+include_once('../mysql2i.class.php');
 if (file_exists("cmscfig.temp"))
 {
 	$cfigStr = file_get_contents("cmscfig.temp");
@@ -91,13 +92,13 @@ function readThemes()
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script type="text/javascript" src="../edit2/ckeditor.js"></script>
-<link rel="stylesheet" type="text/css" href="../themes/default/cmsstyles.css" /> 
+<link rel="stylesheet" type="text/css" href="../themes/default/cmsstyles.css" />
 <title>Portal CMS - Install</title>
 <body>
-<div class="container"> 
-<div class="header"> 
-    <h1> 
-    Portal CMS Installer</h1> 
+<div class="container">
+<div class="header">
+    <h1>
+    Portal CMS Installer</h1>
 </div>
 <div class="sidebar1">
 	<h2>Progress</h2>
@@ -118,7 +119,7 @@ switch( $_POST['step'] ){
 		writeConfig($cfigStr);
 		?>
 		First things first, we need get your connection info and check to see if the database can be connected to!
-		<form method="POST" action="<? echo $PHP_SELF; ?>">
+		<form method="POST" action="<? echo $_SERVER['PHP_SELF']; ?>">
 		<input name="step" type="hidden" value="1.5">
 		Server address: <input name="server" type="text" value="localhost"><br />
 		Username: <input name="username" type="text" value=""><br />
@@ -133,7 +134,7 @@ switch( $_POST['step'] ){
 			mysql_close($link);
 			?>
 			Connection failed, please check data.<br />
-			<form method="POST" action="<? echo $PHP_SELF; ?>">
+			<form method="POST" action="<? echo $SERVER[PHP_SELF]; ?>">
 			<input name="step" type="hidden" value="1.5">
 			Server address: <input name="server" type="text" value="<? echo $_POST['server']; ?>"><br />
 			Username: <input name="username" type="text" value="<? echo $_POST['username']; ?>"><br />
@@ -144,7 +145,7 @@ switch( $_POST['step'] ){
 		} else {
 			?>
 			Connection seems fine and dandy!  Please double check the information and enter the database name.<br />
-			<form method="POST" action="<? echo $PHP_SELF; ?>">
+			<form method="POST" action="<? echo $_SERVER['PHP_SELF']; ?>">
 			<input name="step" type="hidden" value="2">
 			Server address: <input name="server" type="text" value="<? echo $_POST['server']; ?>"><br />
 			Username: <input name="username" type="text" value="<? echo $_POST['username']; ?>"><br />
@@ -160,7 +161,7 @@ switch( $_POST['step'] ){
 		if ( !mysql_select_db($_POST['database'],$link) ){
 			?>
 			Connection seems fine and dandy, but I had trouble connecting to the database.  Check information and try again?<br />
-			<form method="POST" action="<? echo $PHP_SELF; ?>">
+			<form method="POST" action="<? echo $_SERVER['PHP_SELF']; ?>">
 			<input name="step" type="hidden" value="2">
 			Server address: <input name="server" type="text" value="<? echo $_POST['server']; ?>"><br />
 			Username: <input name="username" type="text" value="<? echo $_POST['username']; ?>"><br />
@@ -172,7 +173,7 @@ switch( $_POST['step'] ){
 		} else {
 			?>
 			Congratulations, everything seems in order!  Now to insert the database with the Portal CMS database schema (technical mumbo jumbo)!<br />
-			<form method="POST" action="<? echo $PHP_SELF; ?>">
+			<form method="POST" action="<? echo $_SERVER['PHP_SELF']; ?>">
 			<input name="step" type="hidden" value="3">
 			<input name="server" type="hidden" value="<? echo $_POST['server']; ?>">
 			<input name="username" type="hidden" value="<? echo $_POST['username']; ?>">
@@ -207,7 +208,7 @@ switch( $_POST['step'] ){
 			}
 			?>
 				Now, lets setup the site, click next to continue<br />
-				<form method="POST" action="<? echo $PHP_SELF; ?>">
+				<form method="POST" action="<? echo $_SERVER['PHP_SELF']; ?>">
 				<input name="step" type="hidden" value="4">
 				<input name="server" type="hidden" value="<? echo $_POST['server']; ?>">
 				<input name="username" type="hidden" value="<? echo $_POST['username']; ?>">
@@ -220,7 +221,7 @@ switch( $_POST['step'] ){
 	case 4:
 		?>
 			Please fill out the form and click next to continue...<br />
-			<form method="POST" action="<? echo $PHP_SELF; ?>">
+			<form method="POST" action="<? echo $_SERVER['PHP_SELF']; ?>">
 			<input name="step" type="hidden" value="5">
 			Site Name: <input name="sitename" type="text" value=""> - Example: My Web Site<br />
 			Site URL: <input name="siteurl" type="text" value=""> - Example: http://www.example.com<br />
@@ -261,7 +262,7 @@ switch( $_POST['step'] ){
 		writeConfig($cfigStr);
 		?>
 		All that's needed now is the content Press next to continue...<br />
-		<form method="POST" action="<? echo $PHP_SELF; ?>">
+		<form method="POST" action="<? echo $_SERVER['PHP_SELF']; ?>">
 		<input name="step" type="hidden" value="5.1">
 		<input name="server" type="hidden" value="<? echo $_POST['server']; ?>">
 		<input name="username" type="hidden" value="<? echo $_POST['username']; ?>">
@@ -273,7 +274,7 @@ switch( $_POST['step'] ){
 		break;
 	case 5.1:
 		?>
-		<form method="POST" action="<? echo $PHP_SELF; ?>">
+		<form method="POST" action="<? echo $_SERVER['PHP_SELF']; ?>">
 		<input name="step" type="hidden" value="5.5">
 		Admin Username: <input name="admin" type="text" value=""><br />
 		Admin Password: <input name="pass" type="password" value=""><br />
@@ -284,7 +285,7 @@ switch( $_POST['step'] ){
 		<input name="database" type="hidden" value="<? echo $_POST['database']; ?>">
 		<input name="aemail" type="hidden" value="<? echo $_POST['aemail']; ?>">
 		<input type="submit" value="Next..." name="submit">
-		
+
 		<?php
 		break;
 	case 5.5:
@@ -303,7 +304,7 @@ switch( $_POST['step'] ){
 			}
 		?>
 		All that's needed now is the content Press next to continue...<br />
-		<form method="POST" action="<? echo $PHP_SELF; ?>">
+		<form method="POST" action="<? echo $_SERVER['PHP_SELF']; ?>">
 		<input name="server" type="hidden" value="<? echo $_POST['server']; ?>">
 		<input name="username" type="hidden" value="<? echo $_POST['username']; ?>">
 		<input name="password" type="hidden" value="<? echo $_POST['password']; ?>">
@@ -316,7 +317,7 @@ switch( $_POST['step'] ){
 		{
 		?>
 		Error, your passwords don't match<br />
-		<form method="POST" action="<? echo $PHP_SELF; ?>">
+		<form method="POST" action="<? echo $_SERVER['PHP_SELF']; ?>">
 		<input name="server" type="hidden" value="<? echo $_POST['server']; ?>">
 		<input name="username" type="hidden" value="<? echo $_POST['username']; ?>">
 		<input name="password" type="hidden" value="<? echo $_POST['password']; ?>">
@@ -329,14 +330,14 @@ switch( $_POST['step'] ){
 	case 6:
 		?>
 		Note: This can all be edited later if desired<br />
-		<form method="post" action="<? echo $PHP_SELF; ?>">
+		<form method="post" action="<? echo $_SERVER['PHP_SELF']; ?>">
 		<input name="server" type="hidden" value="<? echo $_POST['server']; ?>">
 		<input name="username" type="hidden" value="<? echo $_POST['username']; ?>">
 		<input name="password" type="hidden" value="<? echo $_POST['password']; ?>">
 		<input name="database" type="hidden" value="<? echo $_POST['database']; ?>">
 		<table width="300">
-		 
-		 <tr><td><label>Site Address: </td><td><input name="siteaddress" value=""/></label></td></tr>   		
+
+		 <tr><td><label>Site Address: </td><td><input name="siteaddress" value=""/></label></td></tr>
 	    	 <tr><td><label>Site Name: </td><td><input name="sitename" value=""/></label></td></tr>
 	    	 <tr><td><label>Tag Line: </td><td><input name="tagline" value=""/></label></td></tr>
 	    	 <tr><td><label>Support Email: </td><td><input name="supportemail" value=""/></label></td></tr>
@@ -379,7 +380,7 @@ switch( $_POST['step'] ){
 		$settingsSiteNote = $_POST['sitenote'];
 		$settingsSiteTheme = $_POST['theme'];
 		$rss = dummyrss();
-		
+
 		$link = mysql_connect($_POST['server'],$_POST['username'],$_POST['password']);
 			if ( !mysql_select_db($_POST['database'],$link) ){
 				echo "Error! Unable to connect to database.";
@@ -403,7 +404,7 @@ switch( $_POST['step'] ){
 	default:
 		?>
 		Welcome to Portal CMS.  Before you get started you will need to install Portal CMS!<br />
-		<form method="POST" action="<? echo $PHP_SELF; ?>">
+		<form method="POST" action="<? echo $_SERVER['PHP_SELF']; ?>">
 		<input name="step" type="hidden" value="1">
 		<input type="submit" value="Get started!" name="submit">
 		</form>
